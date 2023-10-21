@@ -67,7 +67,6 @@ export default function Navbar() {
                                         </Link>
                                     </Button>
                                     <Button
-                                        asChild
                                         variant="ghost"
                                         onClick={() => signOut()}>
                                         Cerrar sesión

@@ -14,17 +14,19 @@ const handler = NextAuth({
                     return null;
                 }
 
-                const resLogin = await fetch(
-                    "http://127.0.0.1:8000/api/usuarios/login",
-                    {
-                        method: "POST",
-                        body: JSON.stringify({
-                            email: credentials.email,
-                            contrasena: credentials.password,
-                        }),
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
+                const API_URL = process.env.API_URL;
+                if (!API_URL) {
+                    return null;
+                }
+
+                const resLogin = await fetch(`${API_URL}/api/usuarios/login`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: credentials.email,
+                        contrasena: credentials.password,
+                    }),
+                    headers: { "Content-Type": "application/json" },
+                });
 
                 const token = await resLogin.json();
 
@@ -41,7 +43,7 @@ const handler = NextAuth({
                 }
 
                 const resProfile = await fetch(
-                    "http://127.0.0.1:8000/api/usuarios/perfil",
+                    `${API_URL}/api/usuarios/perfil`,
                     {
                         method: "GET",
                         credentials: "include",
