@@ -28,32 +28,9 @@ const handler = NextAuth({
                     headers: { "Content-Type": "application/json" },
                 });
 
-                const token = await resLogin.json();
+                const user = await resLogin.json();
 
                 if (!resLogin.ok) {
-                    return null;
-                }
-
-                const headers: Record<string, string> = {
-                    "Content-Type": "application/json",
-                };
-
-                if (token) {
-                    headers["Authorization"] = `Bearer ${token.access_token}`;
-                }
-
-                const resProfile = await fetch(
-                    `${API_URL}/api/usuarios/perfil`,
-                    {
-                        method: "GET",
-                        credentials: "include",
-                        headers,
-                    },
-                );
-
-                const user = await resProfile.json();
-
-                if (!resProfile.ok) {
                     return null;
                 }
 
@@ -69,11 +46,10 @@ const handler = NextAuth({
     },
     callbacks: {
         async jwt({ token, user }) {
-            if (user) token.user = user;
-            return token;
+            return { ...token, ...user };
         },
         async session({ session, token }) {
-            session.user = token.user as any;
+            session.user = token as any;
             return session;
         },
     },
