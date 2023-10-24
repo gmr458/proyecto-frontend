@@ -1,16 +1,14 @@
 "use client";
 
-import Container from "@/components/ui/container";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
-import { signOut, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import Container from "@/components/ui/container";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
     Contact,
     LayoutList,
@@ -20,6 +18,8 @@ import {
     TableProperties,
     User,
 } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Navbar() {
     const { data: session } = useSession();
@@ -42,21 +42,24 @@ export default function Navbar() {
                                     <Button asChild variant="ghost">
                                         <Link
                                             href="/login"
-                                            className="text-sm font-medium transition-colors">
+                                            className="text-sm font-medium transition-colors"
+                                        >
                                             Iniciar sesión
                                         </Link>
                                     </Button>
                                     <Button asChild variant="ghost">
                                         <Link
                                             href="/about"
-                                            className="text-sm font-medium transition-colors">
+                                            className="text-sm font-medium transition-colors"
+                                        >
                                             Información
                                         </Link>
                                     </Button>
                                     <Button asChild variant="ghost">
                                         <Link
                                             href="/contacts"
-                                            className="text-sm font-medium transition-colors">
+                                            className="text-sm font-medium transition-colors"
+                                        >
                                             Contactos
                                         </Link>
                                     </Button>
@@ -81,7 +84,8 @@ export default function Navbar() {
                                                     <DropdownMenuItem>
                                                         <Link
                                                             href="/tasks/create"
-                                                            className="flex flex-row items-center">
+                                                            className="flex flex-row items-center"
+                                                        >
                                                             <PlusCircle className="mr-2 h-4 w-4" />
                                                             <span>Crear</span>
                                                         </Link>
@@ -89,7 +93,8 @@ export default function Navbar() {
                                                     <DropdownMenuItem>
                                                         <Link
                                                             href="/tasks/all"
-                                                            className="flex flex-row items-center">
+                                                            className="flex flex-row items-center"
+                                                        >
                                                             <TableProperties className="mr-2 h-4 w-4" />
                                                             <span>
                                                                 Ver todas
@@ -105,7 +110,8 @@ export default function Navbar() {
                                                     <DropdownMenuItem>
                                                         <Link
                                                             href="/tasks/create"
-                                                            className="flex flex-row items-center">
+                                                            className="flex flex-row items-center"
+                                                        >
                                                             <ListTodo className="mr-2 h-4 w-4" />
                                                             <span>
                                                                 Asignadas
@@ -127,7 +133,8 @@ export default function Navbar() {
                                             <DropdownMenuItem>
                                                 <Link
                                                     href="/profile"
-                                                    className="flex flex-row items-center">
+                                                    className="flex flex-row items-center"
+                                                >
                                                     <Contact className="mr-2 h-4 w-4" />
                                                     <span>Perfil</span>
                                                 </Link>
@@ -136,7 +143,8 @@ export default function Navbar() {
                                                 <Link
                                                     href="#"
                                                     onClick={() => signOut()}
-                                                    className="flex flex-row items-center">
+                                                    className="flex flex-row items-center"
+                                                >
                                                     <LogOut className="mr-2 h-4 w-4" />
                                                     <span>Cerrar sesión</span>
                                                 </Link>

@@ -1,4 +1,4 @@
-import { User, UserLoginResponse } from "../types";
+import { User, UserLoginResponse } from "@/lib/types";
 
 const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000/api";
 

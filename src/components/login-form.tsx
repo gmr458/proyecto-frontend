@@ -13,11 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { LoginUserInput, loginUserSchema } from "@/lib/schemas/user";
-import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function LoginForm() {
     const router = useRouter();
@@ -32,13 +31,7 @@ export default function LoginForm() {
         },
     });
 
-    const {
-        setFocus,
-        reset,
-        handleSubmit,
-        control,
-        formState: { isSubmitSuccessful },
-    } = form;
+    const { setFocus, reset, handleSubmit, control } = form;
 
     const onSubmit: SubmitHandler<LoginUserInput> = async (values) => {
         const response = await signIn("credentials", {
@@ -79,7 +72,8 @@ export default function LoginForm() {
                 <Form {...form}>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="space-y-8">
+                        className="space-y-8"
+                    >
                         <div className="grid gap-2">
                             <FormField
                                 control={form.control}
