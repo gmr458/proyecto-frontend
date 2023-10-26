@@ -69,6 +69,38 @@ export default function Navbar() {
                         <nav className="flex flex-row gap-4 mx-5">
                             {session?.user && (
                                 <>
+                                    {session.user.roles.includes(
+                                        "administrador",
+                                    ) && (
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger>
+                                                <Button variant="outline">
+                                                    <LayoutList className="mr-2 h-4 w-4" />
+                                                    <span>Usuarios</span>
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent>
+                                                <DropdownMenuItem>
+                                                    <Link
+                                                        href="/users/create"
+                                                        className="flex flex-row items-center"
+                                                    >
+                                                        <PlusCircle className="mr-2 h-4 w-4" />
+                                                        <span>Crear</span>
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem>
+                                                    <Link
+                                                        href="/users/all"
+                                                        className="flex flex-row items-center"
+                                                    >
+                                                        <TableProperties className="mr-2 h-4 w-4" />
+                                                        <span>Ver todos</span>
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    )}
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
                                             <Button variant="outline">
