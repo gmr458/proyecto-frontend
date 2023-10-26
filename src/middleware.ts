@@ -22,3 +22,7 @@ export default async function middleware(
     // @ts-expect-error
     return authMiddleware(req, event);
 }
+
+export const config = {
+    matcher: ["/", "/login", "/profile", "/users/:path*", "/tasks/:path*"],
+};
