@@ -80,7 +80,7 @@ export default function Navbar() {
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem asChild>
                                                     <Link
                                                         href="/users/create"
                                                         className="flex flex-row items-center"
@@ -89,7 +89,7 @@ export default function Navbar() {
                                                         <span>Crear</span>
                                                     </Link>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem asChild>
                                                     <Link
                                                         href="/users/all"
                                                         className="flex flex-row items-center"
@@ -113,7 +113,7 @@ export default function Navbar() {
                                                 "administrador",
                                             ) && (
                                                 <>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
                                                         <Link
                                                             href="/tasks/create"
                                                             className="flex flex-row items-center"
@@ -122,7 +122,7 @@ export default function Navbar() {
                                                             <span>Crear</span>
                                                         </Link>
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
                                                         <Link
                                                             href="/tasks/all"
                                                             className="flex flex-row items-center"
@@ -139,7 +139,7 @@ export default function Navbar() {
                                                 "empleado",
                                             ) && (
                                                 <>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
                                                         <Link
                                                             href="/tasks/create"
                                                             className="flex flex-row items-center"
@@ -162,7 +162,7 @@ export default function Navbar() {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem asChild>
                                                 <Link
                                                     href="/profile"
                                                     className="flex flex-row items-center"
@@ -171,7 +171,7 @@ export default function Navbar() {
                                                     <span>Perfil</span>
                                                 </Link>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem>
+                                            <DropdownMenuItem asChild>
                                                 <Link
                                                     href="#"
                                                     onClick={() => signOut()}
