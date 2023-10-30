@@ -141,7 +141,7 @@ export default function Navbar() {
                                                 <>
                                                     <DropdownMenuItem asChild>
                                                         <Link
-                                                            href="/tasks/create"
+                                                            href="/tasks/assigned"
                                                             className="flex flex-row items-center"
                                                         >
                                                             <ListTodo className="mr-2 h-4 w-4" />
