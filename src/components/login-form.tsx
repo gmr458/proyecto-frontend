@@ -31,7 +31,13 @@ export default function LoginForm() {
         },
     });
 
-    const { setFocus, reset, handleSubmit, control } = form;
+    const {
+        setFocus,
+        resetField,
+        handleSubmit,
+        control,
+        formState: { isLoading, isSubmitting },
+    } = form;
 
     const onSubmit: SubmitHandler<LoginUserInput> = async (values) => {
         const response = await signIn("credentials", {
@@ -41,20 +47,18 @@ export default function LoginForm() {
         });
 
         if (response?.error) {
-            console.log({ response });
+            let toastMessage = "Error inesperado, intenta más tarde";
+
             if (response.status === 401) {
-                reset();
-                setFocus("email");
-                toast({
-                    variant: "destructive",
-                    description: "Email o contraseña incorrectos",
-                });
-            } else {
-                toast({
-                    variant: "destructive",
-                    description: "Error inesperado, intenta más tarde",
-                });
+                toastMessage = "Email o contraseña incorrectos";
             }
+
+            toast({
+                variant: "destructive",
+                description: toastMessage,
+            });
+            setFocus("email");
+            resetField("password");
         }
 
         if (response?.ok) {
@@ -106,7 +110,14 @@ export default function LoginForm() {
                                 )}
                             />
                         </div>
-                        <Button type="submit">Iniciar sesión</Button>
+                        <div className="flex flex-col">
+                            <Button
+                                type="submit"
+                                disabled={isLoading || isSubmitting}
+                            >
+                                Iniciar sesión
+                            </Button>
+                        </div>
                     </form>
                 </Form>
             </CardContent>
