@@ -1,38 +1,71 @@
 import { z } from "zod";
 
-export const registerUserSchema = z
+export const createUserSchema = z
     .object({
-        name: z
+        nombre: z
             .string({
-                required_error: "Name is required",
+                required_error: "El nombre es requerido",
             })
-            .min(1, "Full name is required"),
+            .min(1, "El nombre es requerido")
+            .min(2, "El nombre debe tener minimo 2 caracteres")
+            .max(15, "El nombre debe tener maximo 15 caracteres"),
+        apellido: z
+            .string({
+                required_error: "El apellido es requerido",
+            })
+            .min(1, "El apellido es requerido")
+            .min(2, "El apellido debe tener minimo 2 caracteres")
+            .max(15, "El apellido debe tener maximo 15 caracteres"),
+        code_country: z.string({
+            required_error: "El codigo del pais del telefono es requerido",
+        }),
+        number: z
+            .string({ required_error: "El telefono es requerido" })
+            .min(1, "El telefono es requerido")
+            .length(
+                10,
+                "El número de telefono movil debe tener 10 caracteres numericos",
+            ),
         email: z
             .string({
-                required_error: "Email is required",
+                required_error: "El email es requerido",
             })
-            .min(1, "Email is required")
-            .email("Email is invalid"),
-        photo: z.string().optional(),
-        password: z
+            .min(1, "El email es requerido")
+            .email("Email invalido"),
+        numero_documento: z
             .string({
-                required_error: "Password is required",
+                required_error:
+                    "El número de documento de identidad es requerido",
             })
-            .min(1, "Password is required")
-            .min(8, "Password must be more than 8 characters")
-            .max(32, "Password must be less than 32 characters"),
-        passwordConfirm: z
+            .min(1, "El número de documento de identidad es requerido")
+            .min(
+                7,
+                "El numero de documento de identidad debe tener minimo 7 caracteres numericos",
+            )
+            .max(
+                10,
+                "El numero de documento de identidad debe tener maximo 10 caracteres numericos",
+            ),
+        contrasena: z
             .string({
-                required_error: "Confirm your password",
+                required_error: "La contraseña es requirida",
             })
-            .min(1, "Confirm your password"),
+            .min(1, "La contraseña es requirida")
+            .min(8, "La contraseña debe tener minimo 8 caracteres")
+            .max(32, "La contraseña debe tener maximo 32 caracteres"),
+        contrasenaConfirm: z
+            .string({
+                required_error: "Confirme la contraseña",
+            })
+            .min(1, "Confirme la contraseña"),
+        rol_id: z.string({ required_error: "Selecciona un rol" }),
     })
-    .refine((data) => data.password === data.passwordConfirm, {
-        path: ["passwordConfirm"],
-        message: "Passwords do not match",
+    .refine((data) => data.contrasena === data.contrasenaConfirm, {
+        path: ["contrasenaConfirm"],
+        message: "Las contraseñas no coinciden",
     });
 
-export type RegisterUserInput = z.infer<typeof registerUserSchema>;
+export type CreateUserInput = z.infer<typeof createUserSchema>;
 
 export const loginUserSchema = z.object({
     email: z
@@ -49,3 +82,22 @@ export const loginUserSchema = z.object({
 });
 
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
+
+export const responseCreateUserSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        user: z.object({
+            id: z.number().positive(),
+            nombre: z.string(),
+            apellido: z.string(),
+            code_country: z.string(),
+            number: z.string(),
+            email: z.string().email(),
+            numero_documento: z.string(),
+            fecha_creacion: z.string(),
+            activado: z.boolean().or(z.number()),
+        }),
+    }),
+});
+
+export type ResponseCreateUser = z.infer<typeof responseCreateUserSchema>;
