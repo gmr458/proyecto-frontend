@@ -1,78 +1,97 @@
-import { User, UserLoginResponse } from "@/lib/types";
+import {
+    CreateUserInput,
+    ResponseCreateUser,
+    responseCreateUserSchema,
+} from "../schemas/user";
+import { z } from "zod";
 
-const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000/api";
+const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000";
 
-async function handleResponse<T>(response: Response): Promise<T> {
-    const contentType = response.headers.get("Content-Type") || "";
-    const isJson = contentType.includes("application/json");
-    const data = isJson ? await response.json() : await response.text();
+export class HttpError extends Error {
+    constructor(
+        public status: number,
+        message: string,
+        public body?: {
+            detail: {
+                msg: string;
+                cause: string;
+            };
+        },
+    ) {
+        super(message);
+        this.status = status;
+    }
+}
+
+function newHttpError(
+    reason: string,
+    response: Response,
+    method?: string,
+    body?: any,
+) {
+    const text = response.text().catch(() => null);
+    const message = `Error fetching ${method} ${response.url} ${response.status}. ${reason}`;
+    console.error(`${message}. Response body: ${text}`);
+    return new HttpError(response.status, message, body);
+}
+
+export async function safeFetch<T>(
+    schema: z.Schema<T>,
+    input: RequestInfo,
+    init?: RequestInit,
+): Promise<T> {
+    const response = await fetch(input, init);
+
+    const json = await response.json().catch(() => {
+        throw newHttpError("Not a JSON body", response, init?.method);
+    });
 
     if (!response.ok) {
-        if (isJson && data.detail !== null) {
-            throw new Error(JSON.stringify(data.detail));
-        }
-
-        throw new Error(response.statusText);
+        throw newHttpError(
+            "Unsuccessful response",
+            response,
+            init?.method,
+            json,
+        );
     }
 
-    return data as T;
+    const result = schema.safeParse(json);
+    if (!result.success) {
+        throw newHttpError(
+            "Unexpected response schema",
+            response,
+            init?.method,
+        );
+    }
+
+    return result.data;
 }
 
-export async function apiRegisterUser(credentials: string): Promise<User> {
-    const response = await fetch(`${SERVER_URL}/usuarios`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
+export async function apiCreateUser(
+    user: CreateUserInput,
+    token?: string,
+): Promise<ResponseCreateUser> {
+    const userCreated = await safeFetch(
+        responseCreateUserSchema,
+        `${SERVER_URL}/api/usuarios`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                nombre: user.nombre,
+                apellido: user.apellido,
+                code_country: user.code_country,
+                phone_number: user.number,
+                email: user.email,
+                numero_documento: user.numero_documento,
+                contrasena: user.contrasena,
+                rol_id: parseInt(user.rol_id),
+            }),
         },
-        body: credentials,
-    });
-
-    return handleResponse<User>(response).then((user) => user);
-}
-
-export async function apiLoginUser(credentials: string): Promise<string> {
-    const response = await fetch(`${SERVER_URL}/usuarios/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: credentials,
-    });
-
-    return handleResponse<UserLoginResponse>(response).then(
-        (data) => data.access_token,
     );
-}
 
-// export async function apiLogoutUser(): Promise<void> {
-//     const response = await fetch(`${SERVER_URL}/usuarios/logout`, {
-//         method: "GET",
-//         credentials: "include",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     });
-
-//     return handleResponse<void>(response);
-// }
-
-export async function apiGetAuthUser(token: string | null): Promise<User> {
-    const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-    };
-
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-    }
-    const response = await fetch(`${SERVER_URL}/usuarios/perfil`, {
-        method: "GET",
-        credentials: "include",
-        headers,
-    });
-
-    console.log(response);
-
-    return handleResponse<User>(response).then((user) => user);
+    return userCreated;
 }
