@@ -19,7 +19,7 @@ const handler = NextAuth({
                     return null;
                 }
 
-                const resLogin = await fetch(`${API_URL}/api/usuarios/login`, {
+                const response = await fetch(`${API_URL}/api/usuarios/login`, {
                     method: "POST",
                     body: JSON.stringify({
                         email: credentials.email,
@@ -28,9 +28,9 @@ const handler = NextAuth({
                     headers: { "Content-Type": "application/json" },
                 });
 
-                const user = await resLogin.json();
+                const user = await response.json();
 
-                if (!resLogin.ok) {
+                if (!response.ok) {
                     return null;
                 }
 
