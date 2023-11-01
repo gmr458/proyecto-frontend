@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const SERVER_URL = process.env.SERVER_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const handler = NextAuth({
     providers: [
@@ -12,7 +12,7 @@ const handler = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                if (!SERVER_URL) {
+                if (!NEXT_PUBLIC_API_URL) {
                     return null;
                 }
 
@@ -21,7 +21,7 @@ const handler = NextAuth({
                 }
 
                 const response = await fetch(
-                    `${SERVER_URL}/api/usuarios/login`,
+                    `${NEXT_PUBLIC_API_URL}/api/usuarios/login`,
                     {
                         method: "POST",
                         body: JSON.stringify({

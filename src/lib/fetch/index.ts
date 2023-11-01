@@ -5,7 +5,7 @@ import {
 } from "../schemas/user";
 import { z } from "zod";
 
-const SERVER_URL = process.env.SERVER_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export class HttpError extends Error {
     constructor(
@@ -73,7 +73,7 @@ export async function apiCreateUser(
 ): Promise<ResponseCreateUser> {
     const userCreated = await safeFetch(
         responseCreateUserSchema,
-        `${SERVER_URL}/api/usuarios`,
+        `${NEXT_PUBLIC_API_URL}/api/usuarios`,
         {
             method: "POST",
             headers: {
