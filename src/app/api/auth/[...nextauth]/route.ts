@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000";
+const SERVER_URL = process.env.SERVER_URL;
 
 const handler = NextAuth({
     providers: [
@@ -12,6 +12,10 @@ const handler = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
+                if (!SERVER_URL) {
+                    return null;
+                }
+
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
