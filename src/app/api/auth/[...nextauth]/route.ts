@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000";
+
 const handler = NextAuth({
     providers: [
         CredentialsProvider({
@@ -14,19 +16,17 @@ const handler = NextAuth({
                     return null;
                 }
 
-                const API_URL = process.env.API_URL;
-                if (!API_URL) {
-                    return null;
-                }
-
-                const response = await fetch(`${API_URL}/api/usuarios/login`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        email: credentials.email,
-                        contrasena: credentials.password,
-                    }),
-                    headers: { "Content-Type": "application/json" },
-                });
+                const response = await fetch(
+                    `${SERVER_URL}/api/usuarios/login`,
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            email: credentials.email,
+                            contrasena: credentials.password,
+                        }),
+                        headers: { "Content-Type": "application/json" },
+                    },
+                );
 
                 const user = await response.json();
 
