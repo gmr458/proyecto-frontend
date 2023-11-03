@@ -5,10 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-    CreateUserFromExcelInput,
-    createUserFromExcelSchema,
-} from "@/lib/schemas/user";
+import { CreateUserFromExcelInput, createUserFromExcelSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -31,14 +28,7 @@ export default function CreateUserFromExcelForm() {
     const {
         reset,
         handleSubmit,
-        formState: {
-            isSubmitSuccessful,
-            errors,
-            isLoading,
-            isSubmitting,
-            isValidating,
-            isSubmitted,
-        },
+        formState: { isSubmitSuccessful, errors, isLoading, isSubmitting, isValidating, isSubmitted },
     } = form;
 
     useEffect(() => {
@@ -53,17 +43,13 @@ export default function CreateUserFromExcelForm() {
 
         if (isSubmitted) {
             reset();
-            (document.getElementById("fileExcel") as HTMLInputElement).value =
-                "";
+            (document.getElementById("fileExcel") as HTMLInputElement).value = "";
         }
     }, [isSubmitSuccessful, isSubmitted, errors, toast, reset]);
 
     async function createUsers(file: File) {
         try {
-            const response = await apiCreateUserFromExcel(
-                file,
-                session?.user.token,
-            );
+            const response = await apiCreateUserFromExcel(file, session?.user.token);
             toast({ description: response.msg });
         } catch (err: any) {
             let toastMessage = "Error interno, intenta más tarde";
@@ -89,9 +75,7 @@ export default function CreateUserFromExcelForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-3">
-                <CardTitle className="text-2xl">
-                    Desde un archivo Excel
-                </CardTitle>
+                <CardTitle className="text-2xl">Desde un archivo Excel</CardTitle>
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,44 +84,24 @@ export default function CreateUserFromExcelForm() {
                                     <FormField
                                         control={form.control}
                                         name="files"
-                                        render={({
-                                            field: { onChange },
-                                            ...field
-                                        }) => (
+                                        render={({ field: { onChange }, ...field }) => (
                                             <FormItem>
                                                 <FormControl>
                                                     <div className="grid w-full max-w-sm items-center gap-1.5">
-                                                        <Label htmlFor="fileExcel">
-                                                            Archivo Excel
-                                                        </Label>
+                                                        <Label htmlFor="fileExcel">Archivo Excel</Label>
                                                         <Input
                                                             type="file"
                                                             id="fileExcel"
                                                             multiple={false}
-                                                            disabled={
-                                                                form.formState
-                                                                    .isSubmitting
-                                                            }
+                                                            disabled={form.formState.isSubmitting}
                                                             {...field}
-                                                            onChange={(
-                                                                event,
-                                                            ) => {
-                                                                const dataTransfer =
-                                                                    new DataTransfer();
-                                                                Array.from(
-                                                                    event.target
-                                                                        .files!,
-                                                                ).forEach(
-                                                                    (file) =>
-                                                                        dataTransfer.items.add(
-                                                                            file,
-                                                                        ),
+                                                            onChange={(event) => {
+                                                                const dataTransfer = new DataTransfer();
+                                                                Array.from(event.target.files!).forEach((file) =>
+                                                                    dataTransfer.items.add(file),
                                                                 );
-                                                                const newFiles =
-                                                                    dataTransfer.files;
-                                                                onChange(
-                                                                    newFiles,
-                                                                );
+                                                                const newFiles = dataTransfer.files;
+                                                                onChange(newFiles);
                                                             }}
                                                         />
                                                     </div>
@@ -146,14 +110,7 @@ export default function CreateUserFromExcelForm() {
                                         )}
                                     ></FormField>
                                 </div>
-                                <Button
-                                    type="submit"
-                                    disabled={
-                                        isLoading ||
-                                        isSubmitting ||
-                                        isValidating
-                                    }
-                                >
+                                <Button type="submit" disabled={isLoading || isSubmitting || isValidating}>
                                     Crear
                                 </Button>
                             </div>

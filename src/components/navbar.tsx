@@ -9,15 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Contact,
-    LayoutList,
-    ListTodo,
-    LogOut,
-    PlusCircle,
-    TableProperties,
-    User,
-} from "lucide-react";
+import { Contact, LayoutList, ListTodo, LogOut, PlusCircle, TableProperties, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -30,9 +22,7 @@ export default function Navbar() {
                 <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between w--full">
                     <div className="flex items-center">
                         <Link href="/" className="ml-4 lg:ml-0">
-                            <h1 className="text-xl font-bold">
-                                Aplicación Web
-                            </h1>
+                            <h1 className="text-xl font-bold">Aplicación Web</h1>
                         </Link>
                     </div>
                     <div className="flex justify-end">
@@ -40,26 +30,17 @@ export default function Navbar() {
                             {!session && (
                                 <>
                                     <Button asChild variant="ghost">
-                                        <Link
-                                            href="/login"
-                                            className="text-sm font-medium transition-colors"
-                                        >
+                                        <Link href="/login" className="text-sm font-medium transition-colors">
                                             Iniciar sesión
                                         </Link>
                                     </Button>
                                     <Button asChild variant="ghost">
-                                        <Link
-                                            href="/about"
-                                            className="text-sm font-medium transition-colors"
-                                        >
+                                        <Link href="/about" className="text-sm font-medium transition-colors">
                                             Información
                                         </Link>
                                     </Button>
                                     <Button asChild variant="ghost">
-                                        <Link
-                                            href="/contacts"
-                                            className="text-sm font-medium transition-colors"
-                                        >
+                                        <Link href="/contacts" className="text-sm font-medium transition-colors">
                                             Contactos
                                         </Link>
                                     </Button>
@@ -69,9 +50,7 @@ export default function Navbar() {
                         <nav className="flex flex-row gap-4 mx-5">
                             {session?.user && (
                                 <>
-                                    {session.user.roles.includes(
-                                        "administrador",
-                                    ) && (
+                                    {session.user.roles.includes("administrador") && (
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <Button variant="outline">
@@ -81,19 +60,13 @@ export default function Navbar() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem asChild>
-                                                    <Link
-                                                        href="/users/create"
-                                                        className="flex flex-row items-center"
-                                                    >
+                                                    <Link href="/users/create" className="flex flex-row items-center">
                                                         <PlusCircle className="mr-2 h-4 w-4" />
                                                         <span>Crear</span>
                                                     </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem asChild>
-                                                    <Link
-                                                        href="/users/all"
-                                                        className="flex flex-row items-center"
-                                                    >
+                                                    <Link href="/users/all" className="flex flex-row items-center">
                                                         <TableProperties className="mr-2 h-4 w-4" />
                                                         <span>Ver todos</span>
                                                     </Link>
@@ -109,9 +82,7 @@ export default function Navbar() {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
-                                            {session.user.roles.includes(
-                                                "administrador",
-                                            ) && (
+                                            {session.user.roles.includes("administrador") && (
                                                 <>
                                                     <DropdownMenuItem asChild>
                                                         <Link
@@ -123,21 +94,14 @@ export default function Navbar() {
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
-                                                        <Link
-                                                            href="/tasks/all"
-                                                            className="flex flex-row items-center"
-                                                        >
+                                                        <Link href="/tasks/all" className="flex flex-row items-center">
                                                             <TableProperties className="mr-2 h-4 w-4" />
-                                                            <span>
-                                                                Ver todas
-                                                            </span>
+                                                            <span>Ver todas</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                 </>
                                             )}
-                                            {session.user.roles.includes(
-                                                "empleado",
-                                            ) && (
+                                            {session.user.roles.includes("empleado") && (
                                                 <>
                                                     <DropdownMenuItem asChild>
                                                         <Link
@@ -145,9 +109,7 @@ export default function Navbar() {
                                                             className="flex flex-row items-center"
                                                         >
                                                             <ListTodo className="mr-2 h-4 w-4" />
-                                                            <span>
-                                                                Asignadas
-                                                            </span>
+                                                            <span>Asignadas</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                 </>
@@ -163,10 +125,7 @@ export default function Navbar() {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuItem asChild>
-                                                <Link
-                                                    href="/profile"
-                                                    className="flex flex-row items-center"
-                                                >
+                                                <Link href="/profile" className="flex flex-row items-center">
                                                     <Contact className="mr-2 h-4 w-4" />
                                                     <span>Perfil</span>
                                                 </Link>

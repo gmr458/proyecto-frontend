@@ -2,14 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { LoginUserInput, loginUserSchema } from "@/lib/schemas/user";
@@ -74,19 +67,14 @@ export default function LoginForm() {
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="space-y-8"
-                    >
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                         <div className="grid gap-2">
                             <FormField
                                 control={form.control}
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>
-                                            Correo electronico
-                                        </FormLabel>
+                                        <FormLabel>Correo electronico</FormLabel>
                                         <FormControl>
                                             <Input type="email" {...field} />
                                         </FormControl>
@@ -111,10 +99,7 @@ export default function LoginForm() {
                             />
                         </div>
                         <div className="flex flex-col">
-                            <Button
-                                type="submit"
-                                disabled={isLoading || isSubmitting}
-                            >
+                            <Button type="submit" disabled={isLoading || isSubmitting}>
                                 Iniciar sesión
                             </Button>
                         </div>

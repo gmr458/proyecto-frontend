@@ -8,21 +8,9 @@ import { useSession } from "next-auth/react";
 import { HttpError, apiCreateUser } from "@/lib/fetch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Button } from "./ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "./ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useEffect } from "react";
 
 export default function CreateUserForm() {
@@ -164,10 +152,7 @@ export default function CreateUserForm() {
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="flex flex-col space-y-8"
-                    >
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-8">
                         <div className="flex flex-row gap-5">
                             <div className="flex flex-col gap-5">
                                 <div className="grid gap-1">
@@ -178,10 +163,7 @@ export default function CreateUserForm() {
                                             <FormItem>
                                                 <FormLabel>Nombre</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        {...field}
-                                                    />
+                                                    <Input type="text" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -195,10 +177,7 @@ export default function CreateUserForm() {
                                             <FormItem>
                                                 <FormLabel>Apellido</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        {...field}
-                                                    />
+                                                    <Input type="text" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -214,26 +193,15 @@ export default function CreateUserForm() {
                                             name="code_country"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <Select
-                                                        onValueChange={
-                                                            field.onChange
-                                                        }
-                                                        defaultValue={
-                                                            field.value
-                                                        }
-                                                    >
+                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                         <FormControl>
                                                             <SelectTrigger>
                                                                 <SelectValue placeholder="Selecciona pais"></SelectValue>
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
-                                                            <SelectItem value="57">
-                                                                +57
-                                                            </SelectItem>
-                                                            <SelectItem value="34">
-                                                                +34
-                                                            </SelectItem>
+                                                            <SelectItem value="57">+57</SelectItem>
+                                                            <SelectItem value="34">+34</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 </FormItem>
@@ -245,11 +213,7 @@ export default function CreateUserForm() {
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormControl>
-                                                        <Input
-                                                            type="text"
-                                                            {...field}
-                                                            size={11}
-                                                        />
+                                                        <Input type="text" {...field} size={11} />
                                                     </FormControl>
                                                 </FormItem>
                                             )}
@@ -262,14 +226,9 @@ export default function CreateUserForm() {
                                         name="email"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>
-                                                    Correo electronico
-                                                </FormLabel>
+                                                <FormLabel>Correo electronico</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="email"
-                                                        {...field}
-                                                    />
+                                                    <Input type="email" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -283,14 +242,9 @@ export default function CreateUserForm() {
                                         name="numero_documento"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>
-                                                    Número de documento
-                                                </FormLabel>
+                                                <FormLabel>Número de documento</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="number"
-                                                        {...field}
-                                                    />
+                                                    <Input type="number" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -302,14 +256,9 @@ export default function CreateUserForm() {
                                         name="contrasena"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>
-                                                    Contraseña
-                                                </FormLabel>
+                                                <FormLabel>Contraseña</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="password"
-                                                        {...field}
-                                                    />
+                                                    <Input type="password" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -321,14 +270,9 @@ export default function CreateUserForm() {
                                         name="contrasenaConfirm"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>
-                                                    Confirma la contraseña
-                                                </FormLabel>
+                                                <FormLabel>Confirma la contraseña</FormLabel>
                                                 <FormControl>
-                                                    <Input
-                                                        type="password"
-                                                        {...field}
-                                                    />
+                                                    <Input type="password" {...field} />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -341,24 +285,15 @@ export default function CreateUserForm() {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Rol</FormLabel>
-                                                <Select
-                                                    onValueChange={
-                                                        field.onChange
-                                                    }
-                                                    defaultValue={field.value}
-                                                >
+                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger>
                                                             <SelectValue placeholder="Selecciona un rol"></SelectValue>
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="1">
-                                                            Administrador
-                                                        </SelectItem>
-                                                        <SelectItem value="2">
-                                                            Empleado
-                                                        </SelectItem>
+                                                        <SelectItem value="1">Administrador</SelectItem>
+                                                        <SelectItem value="2">Empleado</SelectItem>
                                                     </SelectContent>
                                                 </Select>
                                             </FormItem>
@@ -367,10 +302,7 @@ export default function CreateUserForm() {
                                 </div>
                             </div>
                         </div>
-                        <Button
-                            type="submit"
-                            disabled={isLoading || isSubmitting}
-                        >
+                        <Button type="submit" disabled={isLoading || isSubmitting}>
                             Crear
                         </Button>
                     </form>

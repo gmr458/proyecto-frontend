@@ -14,9 +14,7 @@ export const columns: ColumnDef<Task>[] = [
         accessorKey: "prioridad",
         header: "Prioridad",
         cell: ({ row }) => {
-            const priority = priorities.find(
-                (priority) => priority.value === row.getValue("prioridad"),
-            );
+            const priority = priorities.find((priority) => priority.value === row.getValue("prioridad"));
 
             if (!priority) {
                 return null;
@@ -34,9 +32,7 @@ export const columns: ColumnDef<Task>[] = [
 
             return (
                 <div className="flex items-center">
-                    {priority.icon && (
-                        <priority.icon className="mr-2 h-4 w-4" color={color} />
-                    )}
+                    {priority.icon && <priority.icon className="mr-2 h-4 w-4" color={color} />}
                     <span>{priority.label}</span>
                 </div>
             );
@@ -46,9 +42,7 @@ export const columns: ColumnDef<Task>[] = [
         accessorKey: "tipo",
         header: "Tipo",
         cell: ({ row }) => {
-            const typeTask = types.find(
-                (typeTask) => typeTask.value === row.getValue("tipo"),
-            );
+            const typeTask = types.find((typeTask) => typeTask.value === row.getValue("tipo"));
 
             if (!typeTask) {
                 return null;
@@ -56,9 +50,7 @@ export const columns: ColumnDef<Task>[] = [
 
             return (
                 <div className="flex items-center">
-                    {typeTask.icon && (
-                        <typeTask.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
+                    {typeTask.icon && <typeTask.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
                     <span>{typeTask.label}</span>
                 </div>
             );
@@ -76,9 +68,7 @@ export const columns: ColumnDef<Task>[] = [
         accessorKey: "estado",
         header: "Estado",
         cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue("estado"),
-            );
+            const status = statuses.find((status) => status.value === row.getValue("estado"));
 
             if (!status) {
                 return null;
@@ -96,9 +86,7 @@ export const columns: ColumnDef<Task>[] = [
 
             return (
                 <div className="flex items-center">
-                    {status.icon && (
-                        <status.icon className="mr-2 h-4 w-4" color={color} />
-                    )}
+                    {status.icon && <status.icon className="mr-2 h-4 w-4" color={color} />}
                     <span>{status.label}</span>
                 </div>
             );

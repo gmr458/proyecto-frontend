@@ -22,10 +22,7 @@ export const createUserSchema = z
         number: z
             .string({ required_error: "El telefono es requerido" })
             .min(1, "El telefono es requerido")
-            .length(
-                10,
-                "El número de telefono movil debe tener 10 caracteres numericos",
-            ),
+            .length(10, "El número de telefono movil debe tener 10 caracteres numericos"),
         email: z
             .string({
                 required_error: "El email es requerido",
@@ -34,18 +31,11 @@ export const createUserSchema = z
             .email("Email invalido"),
         numero_documento: z
             .string({
-                required_error:
-                    "El número de documento de identidad es requerido",
+                required_error: "El número de documento de identidad es requerido",
             })
             .min(1, "El número de documento de identidad es requerido")
-            .min(
-                7,
-                "El numero de documento de identidad debe tener minimo 7 caracteres numericos",
-            )
-            .max(
-                10,
-                "El numero de documento de identidad debe tener maximo 10 caracteres numericos",
-            ),
+            .min(7, "El numero de documento de identidad debe tener minimo 7 caracteres numericos")
+            .max(10, "El numero de documento de identidad debe tener maximo 10 caracteres numericos"),
         contrasena: z
             .string({
                 required_error: "La contraseña es requirida",
@@ -75,31 +65,20 @@ const ALLOWED_FILETYPES = [
 
 export const createUserFromExcelSchema = z.object({
     files: z
-        .custom<FileList>(
-            (value) => value instanceof FileList,
-            "Selecciona un archivo Excel",
-        )
+        .custom<FileList>((value) => value instanceof FileList, "Selecciona un archivo Excel")
         .refine((files) => files.length > 0, "Selecciona un archivo Excel")
         .refine((files) => files.length < 2, "Maximo un solo archivo")
         .refine(
-            (files) =>
-                Array.from(files).every(
-                    (file) => file.size <= MAX_SIZE_EXCEL_FILE,
-                ),
+            (files) => Array.from(files).every((file) => file.size <= MAX_SIZE_EXCEL_FILE),
             "El archivo debe ser menor o igual a 5MB",
         )
         .refine(
-            (files) =>
-                Array.from(files).every((file) =>
-                    ALLOWED_FILETYPES.includes(file.type),
-                ),
+            (files) => Array.from(files).every((file) => ALLOWED_FILETYPES.includes(file.type)),
             "Solo se permiten archivos Excel",
         ),
 });
 
-export type CreateUserFromExcelInput = z.infer<
-    typeof createUserFromExcelSchema
->;
+export type CreateUserFromExcelInput = z.infer<typeof createUserFromExcelSchema>;
 
 export const loginUserSchema = z.object({
     email: z
@@ -145,6 +124,4 @@ export const responseCreateUsersFromExcelSchema = z.object({
     }),
 });
 
-export type ResponseCreateUsersFromExcel = z.infer<
-    typeof responseCreateUsersFromExcelSchema
->;
+export type ResponseCreateUsersFromExcel = z.infer<typeof responseCreateUsersFromExcelSchema>;

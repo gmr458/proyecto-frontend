@@ -20,17 +20,14 @@ const handler = NextAuth({
                     return null;
                 }
 
-                const response = await fetch(
-                    `${NEXT_PUBLIC_API_URL}/api/usuarios/login`,
-                    {
-                        method: "POST",
-                        body: JSON.stringify({
-                            email: credentials.email,
-                            contrasena: credentials.password,
-                        }),
-                        headers: { "Content-Type": "application/json" },
-                    },
-                );
+                const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/usuarios/login`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: credentials.email,
+                        contrasena: credentials.password,
+                    }),
+                    headers: { "Content-Type": "application/json" },
+                });
 
                 const user = await response.json();
 

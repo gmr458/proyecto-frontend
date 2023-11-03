@@ -7,10 +7,7 @@ const routes = {
     administrador: ["/tasks/all", "/tasks/all", "/tasks/create"],
 };
 
-export default async function middleware(
-    req: NextRequest,
-    event: NextFetchEvent,
-) {
+export default async function middleware(req: NextRequest, event: NextFetchEvent) {
     const token = await getToken({ req });
 
     if (token !== null) {
