@@ -1,7 +1,9 @@
 import {
     CreateUserInput,
     ResponseCreateUser,
+    ResponseCreateUsersFromExcel,
     responseCreateUserSchema,
+    responseCreateUsersFromExcelSchema,
 } from "../schemas/user";
 import { z } from "zod";
 
@@ -94,4 +96,26 @@ export async function apiCreateUser(
     );
 
     return userCreated;
+}
+
+export async function apiCreateUserFromExcel(
+    file: File,
+    token?: string,
+): Promise<ResponseCreateUsersFromExcel> {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await safeFetch(
+        responseCreateUsersFromExcelSchema,
+        `${NEXT_PUBLIC_API_URL}/api/usuarios/upload`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        },
+    );
+
+    return response;
 }

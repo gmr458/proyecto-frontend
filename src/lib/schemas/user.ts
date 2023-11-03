@@ -67,6 +67,40 @@ export const createUserSchema = z
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 
+const MAX_SIZE_EXCEL_FILE = 5242880;
+const ALLOWED_FILETYPES = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.ms-excel",
+];
+
+export const createUserFromExcelSchema = z.object({
+    files: z
+        .custom<FileList>(
+            (value) => value instanceof FileList,
+            "Selecciona un archivo Excel",
+        )
+        .refine((files) => files.length > 0, "Selecciona un archivo Excel")
+        .refine((files) => files.length < 2, "Maximo un solo archivo")
+        .refine(
+            (files) =>
+                Array.from(files).every(
+                    (file) => file.size <= MAX_SIZE_EXCEL_FILE,
+                ),
+            "El archivo debe ser menor o igual a 5MB",
+        )
+        .refine(
+            (files) =>
+                Array.from(files).every((file) =>
+                    ALLOWED_FILETYPES.includes(file.type),
+                ),
+            "Solo se permiten archivos Excel",
+        ),
+});
+
+export type CreateUserFromExcelInput = z.infer<
+    typeof createUserFromExcelSchema
+>;
+
 export const loginUserSchema = z.object({
     email: z
         .string({
@@ -83,21 +117,34 @@ export const loginUserSchema = z.object({
 
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
 
+const responseUserSchema = z.object({
+    id: z.number().positive(),
+    nombre: z.string(),
+    apellido: z.string(),
+    code_country: z.string(),
+    number: z.string(),
+    email: z.string().email(),
+    numero_documento: z.string(),
+    fecha_creacion: z.string(),
+    activado: z.boolean().or(z.number()),
+});
+
 export const responseCreateUserSchema = z.object({
     msg: z.string(),
     data: z.object({
-        user: z.object({
-            id: z.number().positive(),
-            nombre: z.string(),
-            apellido: z.string(),
-            code_country: z.string(),
-            number: z.string(),
-            email: z.string().email(),
-            numero_documento: z.string(),
-            fecha_creacion: z.string(),
-            activado: z.boolean().or(z.number()),
-        }),
+        user: responseUserSchema,
     }),
 });
 
 export type ResponseCreateUser = z.infer<typeof responseCreateUserSchema>;
+
+export const responseCreateUsersFromExcelSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        users_created: z.array(responseUserSchema),
+    }),
+});
+
+export type ResponseCreateUsersFromExcel = z.infer<
+    typeof responseCreateUsersFromExcelSchema
+>;
