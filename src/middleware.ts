@@ -12,13 +12,13 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
 
     if (token !== null) {
         if (req.nextUrl.pathname.startsWith("/login")) {
-            return NextResponse.redirect(new URL("/", req.url));
+            return NextResponse.redirect(new URL("/profile", req.url));
         }
 
         if (!token.roles.includes("administrador")) {
             for (const route of routes.administrador) {
                 if (req.nextUrl.pathname.startsWith(route)) {
-                    return NextResponse.redirect(new URL("/", req.url));
+                    return NextResponse.redirect(new URL("/profile", req.url));
                 }
             }
         }
@@ -26,7 +26,7 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
         if (!token.roles.includes("empleado")) {
             for (const route of routes.empleado) {
                 if (req.nextUrl.pathname.startsWith(route)) {
-                    return NextResponse.redirect(new URL("/", req.url));
+                    return NextResponse.redirect(new URL("/profile", req.url));
                 }
             }
         }
