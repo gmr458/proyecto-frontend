@@ -12,7 +12,7 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
 
     if (token !== null) {
         if (req.nextUrl.pathname.startsWith("/login")) {
-            return NextResponse.redirect(new URL("/profile", req.url));
+            return NextResponse.redirect(new URL("/", req.url));
         }
 
         if (!token.roles.includes("administrador")) {
