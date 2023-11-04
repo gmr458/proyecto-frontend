@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useEffect } from "react";
+import { Loader2Icon } from "lucide-react";
 
 export default function CreateUserForm() {
     const { toast } = useToast();
@@ -303,6 +304,7 @@ export default function CreateUserForm() {
                             </div>
                         </div>
                         <Button type="submit" disabled={isLoading || isSubmitting}>
+                            {(isLoading || isSubmitting) && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
                             Crear
                         </Button>
                     </form>

@@ -12,6 +12,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 import { HttpError, apiCreateUserFromExcel } from "@/lib/fetch";
 import { useSession } from "next-auth/react";
+import { Loader2Icon } from "lucide-react";
 
 export default function CreateUserFromExcelForm() {
     const { toast } = useToast();
@@ -111,6 +112,9 @@ export default function CreateUserFromExcelForm() {
                                     ></FormField>
                                 </div>
                                 <Button type="submit" disabled={isLoading || isSubmitting || isValidating}>
+                                    {(isLoading || isSubmitting || isValidating) && (
+                                        <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                                    )}
                                     Crear
                                 </Button>
                             </div>
