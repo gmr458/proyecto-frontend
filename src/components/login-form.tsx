@@ -57,7 +57,7 @@ export default function LoginForm() {
 
         if (response?.ok) {
             toast({ description: "Has iniciado sesión" });
-            return router.push("/profile");
+            return router.push("/");
         }
     };
 
