@@ -93,17 +93,6 @@ export const columns: ColumnDef<Task>[] = [
         },
     },
     {
-        accessorKey: "empleado_email",
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Empleado email
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
-    },
-    {
         accessorKey: "creador_email",
         header: ({ column }) => {
             return (

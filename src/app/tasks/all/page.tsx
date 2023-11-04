@@ -1,18 +1,18 @@
-import { Task } from "@/lib/schemas/task";
-import { tasks } from "./fake-data";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
+import { auth } from "@/lib/auth";
+import { apiGetAllTasks } from "@/lib/fetch/tasks";
 
-function getData(): Task[] {
-    return tasks;
-}
+export default async function AllTasksPage() {
+    const session = await auth();
 
-export default function AllTasksPage() {
-    const data = getData();
+    const {
+        data: { tasks },
+    } = await apiGetAllTasks(session?.user.token);
 
     return (
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-            <DataTable columns={columns} data={data} />
+        <div className="hidden h-full flex-1 flex-col py-1 px-4 md:flex">
+            <DataTable columns={columns} data={tasks} pageSize={7} />
         </div>
     );
 }
