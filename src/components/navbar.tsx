@@ -1,7 +1,7 @@
 "use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import {
     DropdownMenu,
@@ -9,7 +9,16 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Contact, LayoutList, ListTodo, LogOut, PlusCircle, TableProperties, User } from "lucide-react";
+import {
+    ContactIcon,
+    LayoutDashboardIcon,
+    LayoutListIcon,
+    ListTodoIcon,
+    LogOutIcon,
+    PlusCircleIcon,
+    TablePropertiesIcon,
+    UserIcon,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -52,22 +61,26 @@ export default function Navbar() {
                                 <>
                                     {session.user.roles.includes("administrador") && (
                                         <DropdownMenu>
+                                            <Link href="/dashboard" className={buttonVariants({ variant: "outline" })}>
+                                                <LayoutDashboardIcon className="mr-2 h-4 w-4" />
+                                                <span>Dashboard</span>
+                                            </Link>
                                             <DropdownMenuTrigger>
                                                 <Button variant="outline">
-                                                    <LayoutList className="mr-2 h-4 w-4" />
+                                                    <LayoutListIcon className="mr-2 h-4 w-4" />
                                                     <span>Usuarios</span>
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem asChild>
                                                     <Link href="/users/create" className="flex flex-row items-center">
-                                                        <PlusCircle className="mr-2 h-4 w-4" />
+                                                        <PlusCircleIcon className="mr-2 h-4 w-4" />
                                                         <span>Crear</span>
                                                     </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem asChild>
                                                     <Link href="/users/all" className="flex flex-row items-center">
-                                                        <TableProperties className="mr-2 h-4 w-4" />
+                                                        <TablePropertiesIcon className="mr-2 h-4 w-4" />
                                                         <span>Ver todos</span>
                                                     </Link>
                                                 </DropdownMenuItem>
@@ -77,7 +90,7 @@ export default function Navbar() {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
                                             <Button variant="outline">
-                                                <LayoutList className="mr-2 h-4 w-4" />
+                                                <LayoutListIcon className="mr-2 h-4 w-4" />
                                                 <span>Tareas</span>
                                             </Button>
                                         </DropdownMenuTrigger>
@@ -89,13 +102,13 @@ export default function Navbar() {
                                                             href="/tasks/create"
                                                             className="flex flex-row items-center"
                                                         >
-                                                            <PlusCircle className="mr-2 h-4 w-4" />
+                                                            <PlusCircleIcon className="mr-2 h-4 w-4" />
                                                             <span>Crear</span>
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>
                                                         <Link href="/tasks/all" className="flex flex-row items-center">
-                                                            <TableProperties className="mr-2 h-4 w-4" />
+                                                            <TablePropertiesIcon className="mr-2 h-4 w-4" />
                                                             <span>Ver todas</span>
                                                         </Link>
                                                     </DropdownMenuItem>
@@ -108,7 +121,7 @@ export default function Navbar() {
                                                             href="/tasks/assigned"
                                                             className="flex flex-row items-center"
                                                         >
-                                                            <ListTodo className="mr-2 h-4 w-4" />
+                                                            <ListTodoIcon className="mr-2 h-4 w-4" />
                                                             <span>Asignadas</span>
                                                         </Link>
                                                     </DropdownMenuItem>
@@ -119,14 +132,14 @@ export default function Navbar() {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
                                             <Button variant="outline">
-                                                <User className="mr-2 h-4 w-4" />
+                                                <UserIcon className="mr-2 h-4 w-4" />
                                                 <span>Cuenta</span>
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuItem asChild>
                                                 <Link href="/profile" className="flex flex-row items-center">
-                                                    <Contact className="mr-2 h-4 w-4" />
+                                                    <ContactIcon className="mr-2 h-4 w-4" />
                                                     <span>Perfil</span>
                                                 </Link>
                                             </DropdownMenuItem>
@@ -136,7 +149,7 @@ export default function Navbar() {
                                                     onClick={() => signOut()}
                                                     className="flex flex-row items-center"
                                                 >
-                                                    <LogOut className="mr-2 h-4 w-4" />
+                                                    <LogOutIcon className="mr-2 h-4 w-4" />
                                                     <span>Cerrar sesión</span>
                                                 </Link>
                                             </DropdownMenuItem>
