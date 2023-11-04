@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const handler = NextAuth({
+export const nextAuthOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -69,6 +69,8 @@ const handler = NextAuth({
             return session;
         },
     },
-});
+};
+
+const handler = NextAuth(nextAuthOptions);
 
 export { handler as GET, handler as POST };
