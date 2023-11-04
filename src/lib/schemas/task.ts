@@ -14,3 +14,17 @@ export const taskSchema = z.object({
 });
 
 export type Task = z.infer<typeof taskSchema>;
+
+export const responseTaskCountSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        total_tasks: z.number().optional(),
+        tareas_sin_iniciar: z.number().optional(),
+        tareas_en_proceso: z.number().optional(),
+        tareas_ejecutadas: z.number().optional(),
+    }),
+});
+
+export type ResponseTaskCount = z.infer<typeof responseTaskCountSchema>;
+
+export type ReqCountTaskKind = "all" | "sin_iniciar" | "en_proceso" | "ejecutadas";

@@ -4,7 +4,7 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 const routes = {
     empleado: ["/tasks/assigned"],
-    administrador: ["/tasks/all", "/tasks/all", "/tasks/create"],
+    administrador: ["/tasks/all", "/tasks/all", "/tasks/create", "/dashboard"],
 };
 
 export default async function middleware(req: NextRequest, event: NextFetchEvent) {
@@ -43,5 +43,5 @@ export default async function middleware(req: NextRequest, event: NextFetchEvent
 }
 
 export const config = {
-    matcher: ["/", "/login", "/profile", "/users/:path*", "/tasks/:path*"],
+    matcher: ["/", "/login", "/profile", "/users/:path*", "/tasks/:path*", "/dashboard"],
 };

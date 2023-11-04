@@ -108,6 +108,8 @@ const responseUserSchema = z.object({
     activado: z.boolean().or(z.number()),
 });
 
+export type ResponseUser = z.infer<typeof responseUserSchema>;
+
 export const responseCreateUserSchema = z.object({
     msg: z.string(),
     data: z.object({
@@ -125,3 +127,16 @@ export const responseCreateUsersFromExcelSchema = z.object({
 });
 
 export type ResponseCreateUsersFromExcel = z.infer<typeof responseCreateUsersFromExcelSchema>;
+
+export const resUserTopSchema = responseUserSchema.extend({ tareas_ejecutadas: z.number() });
+
+export type ResUserTop = z.infer<typeof resUserTopSchema>;
+
+export const resTopUsersTasksExecutedSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        users: z.array(resUserTopSchema),
+    }),
+});
+
+export type ResTopUsersTasksExecuted = z.infer<typeof resTopUsersTasksExecutedSchema>;

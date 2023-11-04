@@ -1,13 +1,16 @@
+import { ReqCountTaskKind, ResponseTaskCount, responseTaskCountSchema } from "../schemas/task";
 import {
     CreateUserInput,
+    ResTopUsersTasksExecuted,
     ResponseCreateUser,
     ResponseCreateUsersFromExcel,
+    resTopUsersTasksExecutedSchema,
     responseCreateUserSchema,
     responseCreateUsersFromExcelSchema,
 } from "../schemas/user";
 import { z } from "zod";
 
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export class HttpError extends Error {
     constructor(
@@ -84,6 +87,21 @@ export async function apiCreateUserFromExcel(file: File, token?: string): Promis
         },
         body: formData,
     });
+
+    return response;
+}
+
+export async function apiGetTopUsersTasksExecuted(token?: string): Promise<ResTopUsersTasksExecuted> {
+    const response = await safeFetch(
+        resTopUsersTasksExecutedSchema,
+        `${NEXT_PUBLIC_API_URL}/api/usuarios/top/tareas/ejecutadas`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
 
     return response;
 }
