@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { LoginUserInput, loginUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -100,6 +101,7 @@ export default function LoginForm() {
                         </div>
                         <div className="flex flex-col">
                             <Button type="submit" disabled={isLoading || isSubmitting}>
+                                {(isLoading || isSubmitting) && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
                                 Iniciar sesión
                             </Button>
                         </div>
