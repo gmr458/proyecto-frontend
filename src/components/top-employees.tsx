@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ResUserTop } from "@/lib/schemas/user";
+import { UserRanked } from "@/lib/schemas/user";
 
 type PropsTopEmployees = {
-    users: ResUserTop[];
+    users: UserRanked[];
 };
 
 export function TopEmployees({ users }: PropsTopEmployees) {
