@@ -1,10 +1,24 @@
 import { z } from "zod";
 
+export const createTaskSchema = z.object({
+    titulo: z.string({ required_error: "El titulo es requerido" }).min(1, "El titulo es requerido"),
+    prioridad: z.enum(["baja", "media", "alta"]),
+    tipo_id: z.string(),
+    empleado_id: z.number(),
+    creador_id: z.number().nullable(),
+    fecha_limite: z.date({ required_error: "La fecha limite es requerida" }),
+    evidencia: z.string().optional(),
+});
+
+export type CreateTask = z.infer<typeof createTaskSchema>;
+
 export const taskSchema = z.object({
     id: z.number(),
     titulo: z.string(),
     prioridad: z.enum(["baja", "media", "alta"]),
-    tipo: z.enum(["quimico", "agua", "aire", "reciclaje"]),
+    tipo_tarea_id: z.number(),
+    tipo_tarea: z.enum(["quimico", "agua", "aire", "reciclaje"]),
+    tipo_tarea_descripcion: z.string().nullable(),
     empleado_id: z.number(),
     empleado_email: z.string(),
     empleado_nombre: z.string(),
@@ -20,6 +34,13 @@ export const taskSchema = z.object({
 });
 
 export type Task = z.infer<typeof taskSchema>;
+
+export const responseCreateTaskSchema = z.object({
+    msg: z.string(),
+    tarea: taskSchema,
+});
+
+export type ResponseCreateTask = z.infer<typeof responseCreateTaskSchema>;
 
 export const responseTaskCountSchema = z.object({
     msg: z.string(),
@@ -43,3 +64,9 @@ export const allTasksSchema = z.object({
 });
 
 export type AllTasks = z.infer<typeof allTasksSchema>;
+
+export const responseDeleteTask = z.object({
+    msg: z.string(),
+});
+
+export type ResponseDeleteTask = z.infer<typeof responseDeleteTask>;

@@ -1,12 +1,15 @@
-import { ReqCountTaskKind, ResponseTaskCount, responseTaskCountSchema } from "../schemas/task";
 import {
-    CreateUserInput,
-    ResTopUsersTasksExecuted,
-    ResponseCreateUser,
-    ResponseCreateUsersFromExcel,
-    resTopUsersTasksExecutedSchema,
-    responseCreateUserSchema,
-    responseCreateUsersFromExcelSchema,
+    UsersList,
+    CreateUser,
+    usersRankedTasksExecuted,
+    ResponseUser,
+    ResponseCreateUsersExcel,
+    usersListSchema,
+    usersRankedTasksExecutedSchema,
+    responseUserSchema,
+    responseCreateUsersExcelSchema,
+    responseDeleteUser,
+    ResponseDeleteUser,
 } from "../schemas/user";
 import { z } from "zod";
 
@@ -19,7 +22,7 @@ export class HttpError extends Error {
         public body?: {
             detail: {
                 msg: string;
-                cause: string;
+                cause?: string;
             };
         },
     ) {
@@ -54,8 +57,8 @@ export async function safeFetch<T>(schema: z.Schema<T>, input: RequestInfo, init
     return result.data;
 }
 
-export async function apiCreateUser(user: CreateUserInput, token?: string): Promise<ResponseCreateUser> {
-    const userCreated = await safeFetch(responseCreateUserSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios`, {
+export async function apiCreateUser(user: CreateUser, token?: string): Promise<ResponseUser> {
+    const userCreated = await safeFetch(responseUserSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -76,11 +79,11 @@ export async function apiCreateUser(user: CreateUserInput, token?: string): Prom
     return userCreated;
 }
 
-export async function apiCreateUserFromExcel(file: File, token?: string): Promise<ResponseCreateUsersFromExcel> {
+export async function apiCreateUserFromExcel(file: File, token?: string): Promise<ResponseCreateUsersExcel> {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await safeFetch(responseCreateUsersFromExcelSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/upload`, {
+    const response = await safeFetch(responseCreateUsersExcelSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/upload`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -91,9 +94,9 @@ export async function apiCreateUserFromExcel(file: File, token?: string): Promis
     return response;
 }
 
-export async function apiGetTopUsersTasksExecuted(token?: string): Promise<ResTopUsersTasksExecuted> {
+export async function apiGetTopUsersTasksExecuted(token?: string): Promise<usersRankedTasksExecuted> {
     const response = await safeFetch(
-        resTopUsersTasksExecutedSchema,
+        usersRankedTasksExecutedSchema,
         `${NEXT_PUBLIC_API_URL}/api/usuarios/top/tareas/ejecutadas`,
         {
             method: "GET",
@@ -102,6 +105,61 @@ export async function apiGetTopUsersTasksExecuted(token?: string): Promise<ResTo
             },
         },
     );
+
+    return response;
+}
+
+export async function apiGetAllUsers(token?: string): Promise<UsersList> {
+    const response = await safeFetch(usersListSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/all`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiGetAllEmployees(token?: string): Promise<UsersList> {
+    const response = await safeFetch(usersListSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/all/empleados`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiGetAllAdmins(token?: string): Promise<UsersList> {
+    const response = await safeFetch(usersListSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/all/admins`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiDeleteUserById(id: number, token?: string): Promise<ResponseDeleteUser> {
+    const response = await safeFetch(responseDeleteUser, `${NEXT_PUBLIC_API_URL}/api/usuarios/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiGetProfile(token?: string): Promise<ResponseUser> {
+    const response = await safeFetch(responseUserSchema, `${NEXT_PUBLIC_API_URL}/api/usuarios/perfil`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
     return response;
 }

@@ -55,7 +55,7 @@ export const createUserSchema = z
         message: "Las contraseñas no coinciden",
     });
 
-export type CreateUserInput = z.infer<typeof createUserSchema>;
+export type CreateUser = z.infer<typeof createUserSchema>;
 
 const MAX_SIZE_EXCEL_FILE = 5242880;
 const ALLOWED_FILETYPES = [
@@ -63,7 +63,7 @@ const ALLOWED_FILETYPES = [
     "application/vnd.ms-excel",
 ];
 
-export const createUserFromExcelSchema = z.object({
+export const createUsersExcelSchema = z.object({
     files: z
         .custom<FileList>((value) => value instanceof FileList, "Selecciona un archivo Excel")
         .refine((files) => files.length > 0, "Selecciona un archivo Excel")
@@ -78,9 +78,9 @@ export const createUserFromExcelSchema = z.object({
         ),
 });
 
-export type CreateUserFromExcelInput = z.infer<typeof createUserFromExcelSchema>;
+export type CreateUsersExcel = z.infer<typeof createUsersExcelSchema>;
 
-export const loginUserSchema = z.object({
+export const userLoginSchema = z.object({
     email: z
         .string({
             required_error: "El correo electronico es requerido",
@@ -94,49 +94,65 @@ export const loginUserSchema = z.object({
         .min(1, "La contraseña es requerida"),
 });
 
-export type LoginUserInput = z.infer<typeof loginUserSchema>;
+export type UserLogin = z.infer<typeof userLoginSchema>;
 
-const responseUserSchema = z.object({
+const userSchema = z.object({
     id: z.number().positive(),
     nombre: z.string(),
     apellido: z.string(),
-    code_country: z.string(),
-    number: z.string(),
     email: z.string().email(),
     numero_documento: z.string(),
+    code_country: z.string(),
+    phone_number: z.string(),
     fecha_creacion: z.string(),
     activado: z.boolean().or(z.number()),
+    roles: z.string().optional(),
+});
+
+export type User = z.infer<typeof userSchema>;
+
+export const responseUserSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        user: userSchema,
+    }),
 });
 
 export type ResponseUser = z.infer<typeof responseUserSchema>;
 
-export const responseCreateUserSchema = z.object({
+export const responseCreateUsersExcelSchema = z.object({
     msg: z.string(),
     data: z.object({
-        user: responseUserSchema,
+        users_created: z.array(userSchema),
     }),
 });
 
-export type ResponseCreateUser = z.infer<typeof responseCreateUserSchema>;
+export type ResponseCreateUsersExcel = z.infer<typeof responseCreateUsersExcelSchema>;
 
-export const responseCreateUsersFromExcelSchema = z.object({
+export const userRankedSchema = userSchema.extend({ tareas_ejecutadas: z.number() });
+
+export type UserRanked = z.infer<typeof userRankedSchema>;
+
+export const usersRankedTasksExecutedSchema = z.object({
     msg: z.string(),
     data: z.object({
-        users_created: z.array(responseUserSchema),
+        users: z.array(userRankedSchema),
     }),
 });
 
-export type ResponseCreateUsersFromExcel = z.infer<typeof responseCreateUsersFromExcelSchema>;
+export type usersRankedTasksExecuted = z.infer<typeof usersRankedTasksExecutedSchema>;
 
-export const resUserTopSchema = responseUserSchema.extend({ tareas_ejecutadas: z.number() });
-
-export type ResUserTop = z.infer<typeof resUserTopSchema>;
-
-export const resTopUsersTasksExecutedSchema = z.object({
+export const usersListSchema = z.object({
     msg: z.string(),
     data: z.object({
-        users: z.array(resUserTopSchema),
+        users: z.array(userSchema),
     }),
 });
 
-export type ResTopUsersTasksExecuted = z.infer<typeof resTopUsersTasksExecutedSchema>;
+export type UsersList = z.infer<typeof usersListSchema>;
+
+export const responseDeleteUser = z.object({
+    msg: z.string(),
+});
+
+export type ResponseDeleteUser = z.infer<typeof responseDeleteUser>;
