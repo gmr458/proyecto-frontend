@@ -4,13 +4,6 @@ import { Task } from "@/lib/schemas/task";
 import { ColumnDef } from "@tanstack/react-table";
 import { priorities, statuses, types } from "@/app/tasks/data";
 import colors from "tailwindcss/colors";
-// import {
-//     DropdownMenu,
-//     DropdownMenuContent,
-//     DropdownMenuTrigger,
-//     DropdownMenuItem,
-//     DropdownMenuLabel,
-// } from "@/components/ui/dropdown-menu";
 import { ArrowUpDownIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -24,12 +17,6 @@ export const columns: ColumnDef<Task>[] = [
                     <ArrowUpDownIcon className="ml-2 h-4 w-4" />
                 </Button>
             );
-        },
-        cell: ({ row }) => {
-            const maxLength = 20;
-            const titulo: string = row.getValue("titulo");
-            const truncatedTitulo = `${titulo.slice(0, maxLength)}...`;
-            return <div>{titulo.length > maxLength ? truncatedTitulo : titulo}</div>;
         },
     },
     {
@@ -68,7 +55,7 @@ export const columns: ColumnDef<Task>[] = [
         },
     },
     {
-        accessorKey: "tipo",
+        accessorKey: "tipo_tarea",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -78,7 +65,7 @@ export const columns: ColumnDef<Task>[] = [
             );
         },
         cell: ({ row }) => {
-            const typeTask = types.find((typeTask) => typeTask.value === row.getValue("tipo"));
+            const typeTask = types.find((typeTask) => typeTask.value === row.getValue("tipo_tarea"));
 
             if (!typeTask) {
                 return null;
@@ -93,6 +80,17 @@ export const columns: ColumnDef<Task>[] = [
         },
     },
     {
+        accessorKey: "empleado_email",
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Empleado email
+                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+    },
+    {
         accessorKey: "creador_email",
         header: ({ column }) => {
             return (
@@ -103,21 +101,25 @@ export const columns: ColumnDef<Task>[] = [
             );
         },
     },
-    // {
-    //     accessorKey: "fecha_creacion",
-    //     header: ({ column }) => {
-    //         return (
-    //             <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-    //                 Fecha de creación
-    //                 <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-    //             </Button>
-    //         );
-    //     },
-    //     cell: ({ row }) => {
-    //         const date = new Date(row.getValue("fecha_creacion"));
-    //         return <div>{date.toLocaleDateString()}</div>;
-    //     },
-    // },
+    {
+        accessorKey: "fecha_creacion",
+        header: ({ column }) => {
+            return (
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Fecha de creación
+                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("fecha_creacion"));
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDay()).padStart(2, "0");
+            const formattedDate = `${day}/${month}/${year}`;
+            return <div className="text-center">{formattedDate}</div>;
+        },
+    },
     {
         accessorKey: "fecha_limite",
         header: ({ column }) => {
@@ -172,27 +174,4 @@ export const columns: ColumnDef<Task>[] = [
             );
         },
     },
-    // {
-    //     id: "actions",
-    //     cell: ({ row }) => {
-    //         const task = row.original;
-
-    //         return (
-    //             <DropdownMenu>
-    //                 <DropdownMenuTrigger asChild>
-    //                     <Button variant="ghost" className="h-8 w-8 p-0">
-    //                         <span className="sr-only">Open menu</span>
-    //                         <MoreHorizontalIcon className="h-4 w-4" />
-    //                     </Button>
-    //                 </DropdownMenuTrigger>
-    //                 <DropdownMenuContent align="end">
-    //                     <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-    //                     <DropdownMenuItem onClick={() => navigator.clipboard.writeText(task.id.toString())}>
-    //                         Desactivar
-    //                     </DropdownMenuItem>
-    //                 </DropdownMenuContent>
-    //             </DropdownMenu>
-    //         );
-    //     },
-    // },
 ];
