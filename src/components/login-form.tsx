@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { LoginUserInput, loginUserSchema } from "@/lib/schemas/user";
+import { UserLogin, userLoginSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon } from "lucide-react";
 import { signIn } from "next-auth/react";
@@ -17,8 +17,8 @@ export default function LoginForm() {
 
     const { toast } = useToast();
 
-    const form = useForm<LoginUserInput>({
-        resolver: zodResolver(loginUserSchema),
+    const form = useForm<UserLogin>({
+        resolver: zodResolver(userLoginSchema),
         defaultValues: {
             email: "",
             password: "",
@@ -33,7 +33,7 @@ export default function LoginForm() {
         formState: { isLoading, isSubmitting },
     } = form;
 
-    const onSubmit: SubmitHandler<LoginUserInput> = async (values) => {
+    const onSubmit: SubmitHandler<UserLogin> = async (values) => {
         const response = await signIn("credentials", {
             email: values.email,
             password: values.password,
@@ -64,7 +64,7 @@ export default function LoginForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Inicia sesión</CardTitle>
+                <CardTitle className="text-2xl text-center">Inicia sesión</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreateUserFromExcelInput, createUserFromExcelSchema } from "@/lib/schemas/user";
+import { CreateUsersExcel, createUsersExcelSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,9 +18,9 @@ export default function CreateUserFromExcelForm() {
     const { toast } = useToast();
     const { data: session } = useSession();
 
-    const form = useForm<CreateUserFromExcelInput>({
+    const form = useForm<CreateUsersExcel>({
         mode: "onChange",
-        resolver: zodResolver(createUserFromExcelSchema),
+        resolver: zodResolver(createUsersExcelSchema),
         defaultValues: {
             files: undefined,
         },
@@ -68,7 +68,7 @@ export default function CreateUserFromExcelForm() {
         }
     }
 
-    const onSubmit: SubmitHandler<CreateUserFromExcelInput> = (values) => {
+    const onSubmit: SubmitHandler<CreateUsersExcel> = (values) => {
         const file = Array.from(values.files)[0];
         createUsers(file);
     };
@@ -76,7 +76,7 @@ export default function CreateUserFromExcelForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-3">
-                <CardTitle className="text-2xl">Desde un archivo Excel</CardTitle>
+                <CardTitle className="text-2xl text-center">Desde un archivo Excel</CardTitle>
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={handleSubmit(onSubmit)}>

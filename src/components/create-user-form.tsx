@@ -2,7 +2,7 @@
 
 import { useToast } from "./ui/use-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { CreateUserInput, createUserSchema } from "@/lib/schemas/user";
+import { CreateUser, createUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import { HttpError, apiCreateUser } from "@/lib/fetch";
@@ -18,7 +18,7 @@ export default function CreateUserForm() {
     const { toast } = useToast();
     const { data: session } = useSession();
 
-    const form = useForm<CreateUserInput>({
+    const form = useForm<CreateUser>({
         resolver: zodResolver(createUserSchema),
         defaultValues: {
             nombre: "",
@@ -108,7 +108,7 @@ export default function CreateUserForm() {
         }
     }, [isSubmitSuccessful, errors, toast]);
 
-    async function createUser(user: CreateUserInput) {
+    async function createUser(user: CreateUser) {
         try {
             const response = await apiCreateUser(user, session?.user.token);
             toast({ description: response.msg });
@@ -142,14 +142,14 @@ export default function CreateUserForm() {
         }
     }
 
-    const onSubmit: SubmitHandler<CreateUserInput> = (values) => {
+    const onSubmit: SubmitHandler<CreateUser> = (values) => {
         createUser(values);
     };
 
     return (
         <Card className="my-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Crear usuario</CardTitle>
+                <CardTitle className="text-2xl text-center">Crear usuario</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
