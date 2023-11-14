@@ -5,6 +5,8 @@ import {
     ColumnDef,
     ColumnFiltersState,
     SortingState,
+    Table as TanStackTable,
+    VisibilityState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -12,46 +14,61 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+    DropdownMenuItem,
+    DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { Loader2Icon, MoreHorizontalIcon } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
 interface DataTableProps<TData, TValue> {
+    children: React.JSX.Element;
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    pageSize: number;
+    loadingData: boolean;
+    error: string | null;
 }
 
-export function DataTable<TData, TValue>({ columns, data, pageSize }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    children,
+    columns,
+    data,
+    loadingData,
+    error,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        initialState: { pagination: { pageSize } },
+        initialState: { pagination: { pageSize: 20 } },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
+            columnVisibility,
         },
+    });
+
+    const toolbar = React.cloneElement(children as React.ReactElement<{ table: TanStackTable<TData> }>, {
+        table: table,
     });
 
     return (
         <div>
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filtrar por titulo"
-                    value={(table.getColumn("titulo")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("titulo")?.setFilterValue(event.target.value)}
-                    className="max-w-sm"
-                />
-            </div>
+            {toolbar}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -83,7 +100,9 @@ export function DataTable<TData, TValue>({ columns, data, pageSize }: DataTableP
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No hay resultados.
+                                    {loadingData === false && error === null && <>No hay resultados</>}
+                                    {loadingData && error === null && <>Cargando...</>}
+                                    {loadingData === false && error && <div className="text-red-400">{error}</div>}
                                 </TableCell>
                             </TableRow>
                         )}
