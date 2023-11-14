@@ -21,9 +21,14 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { Skeleton } from "./ui/skeleton";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    const pathname = usePathname();
+
+    const unauthenticatedRoutes = ["/login", "/about", "/contacts"];
 
     return (
         <header className="sm:flex sm:justify-between py-1 px-4 border-b">
@@ -35,8 +40,21 @@ export default function Navbar() {
                         </Link>
                     </div>
                     <div className="flex justify-end">
-                        <nav className="mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block">
-                            {!session && (
+                        <nav className="flex flex-row gap-4 mx-5">
+                            {status === "loading" && unauthenticatedRoutes.includes(pathname) && (
+                                <>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[110px]" />
+                                    </Button>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[110px]" />
+                                    </Button>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[110px]" />
+                                    </Button>
+                                </>
+                            )}
+                            {!session && status !== "loading" && (
                                 <>
                                     <Button asChild variant="ghost">
                                         <Link href="/login" className="text-sm font-medium transition-colors">
@@ -57,6 +75,22 @@ export default function Navbar() {
                             )}
                         </nav>
                         <nav className="flex flex-row gap-4 mx-5">
+                            {status === "loading" && !unauthenticatedRoutes.includes(pathname) && (
+                                <>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[131px]" />
+                                    </Button>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[117px]" />
+                                    </Button>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[103px]" />
+                                    </Button>
+                                    <Button asChild variant="ghost">
+                                        <Skeleton className="h-[40px] w-[106px]" />
+                                    </Button>
+                                </>
+                            )}
                             {session?.user && (
                                 <>
                                     {session.user.roles.includes("administrador") && (
