@@ -15,28 +15,39 @@ import { MoreHorizontalIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { columns } from "@/app/tasks/columns";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AssignedTasksPage() {
     const { data: session } = useSession();
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [loadingData, setLoadingData] = useState<boolean>(true);
+    const [loadingDataTable, setLoadingDataTable] = useState<boolean>(true);
+    const [errorDataTable, setErrorDataTable] = useState<string | null>(null);
+    const { toast } = useToast();
 
     useEffect(() => {
         async function fetchData() {
             if (session?.user.token) {
-                const {
-                    data: { tasks },
-                } = await apiGetMyAssignedTasks(session?.user.token);
+                try {
+                    const {
+                        data: { tasks },
+                    } = await apiGetMyAssignedTasks(session?.user.token);
 
-                setLoadingData(false);
-                setTasks(tasks);
+                    setLoadingDataTable(false);
+                    setTasks(tasks);
+                } catch (err: any) {
+                    console.error(err);
+                    const message = "Error intentando obtener las tareas, intenta más tarde.";
+                    setLoadingDataTable(false);
+                    setErrorDataTable(message);
+                    toast({ variant: "destructive", description: message });
+                }
             } else {
-                setLoadingData(true);
+                setLoadingDataTable(true);
             }
         }
 
         fetchData();
-    }, [session?.user.token]);
+    }, [session?.user.token, toast]);
 
     const memoizedColumns = useMemo(() => {
         return [
@@ -84,9 +95,11 @@ export default function AssignedTasksPage() {
     return (
         <div className="hidden h-full flex-1 flex-col space-y-8 px-8 md:flex">
             <DataTable
+                // @ts-ignore
                 columns={memoizedColumns.filter((col) => col.accessorKey !== "empleado_email")}
                 data={tasks}
-                loadingData={loadingData}
+                loadingData={loadingDataTable}
+                error={errorDataTable}
             >
                 <DataTableToolbar columnsToFilter={columnsToFilter} />
             </DataTable>
