@@ -42,19 +42,60 @@ export const responseCreateTaskSchema = z.object({
 
 export type ResponseCreateTask = z.infer<typeof responseCreateTaskSchema>;
 
-export const responseTaskCountSchema = z.object({
+export const taskCountSchema = z.object({
     msg: z.string(),
     data: z.object({
-        total_tasks: z.number().optional(),
-        tareas_sin_iniciar: z.number().optional(),
-        tareas_en_proceso: z.number().optional(),
-        tareas_ejecutadas: z.number().optional(),
+        total_tasks: z.number(),
     }),
 });
 
-export type ResponseTaskCount = z.infer<typeof responseTaskCountSchema>;
+export type TaskCount = z.infer<typeof taskCountSchema>;
 
-export type ReqCountTaskKind = "all" | "sin_iniciar" | "en_proceso" | "ejecutadas";
+export const taskCountWithoutStartSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        tareas_sin_iniciar: z.number(),
+    }),
+});
+
+export type TaskCountWithoutStart = z.infer<typeof taskCountWithoutStartSchema>;
+
+export const taskCountInProgressSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        tareas_en_proceso: z.number(),
+    }),
+});
+
+export type TaskCountInProgress = z.infer<typeof taskCountInProgressSchema>;
+
+export const taskCountExecutedSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        tareas_ejecutadas: z.number(),
+    }),
+});
+
+export type TaskCountExecuted = z.infer<typeof taskCountExecutedSchema>;
+
+export const tasksDataDashboardSchema = z.object({
+    msg: z.string(),
+    data: z.object({
+        count_tareas: z.number(),
+        count_tareas_tipo_agua: z.number(),
+        count_tareas_tipo_aire: z.number(),
+        count_tareas_tipo_quimico: z.number(),
+        count_tareas_tipo_reciclaje: z.number(),
+        count_tareas_prioridad_alta: z.number(),
+        count_tareas_prioridad_media: z.number(),
+        count_tareas_prioridad_baja: z.number(),
+        count_tareas_estado_sin_iniciar: z.number(),
+        count_tareas_estado_en_proceso: z.number(),
+        count_tareas_estado_ejecutadas: z.number(),
+    }),
+});
+
+export type TasksDataDashboard = z.infer<typeof tasksDataDashboardSchema>;
 
 export const allTasksSchema = z.object({
     msg: z.string(),

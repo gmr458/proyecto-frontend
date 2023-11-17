@@ -3,10 +3,15 @@ import Providers from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+export const fontSans = FontSans({
+    subsets: ["latin"],
+    variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -15,8 +20,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
+        <html lang="en" suppressHydrationWarning>
+            <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <Providers>
                         <Navbar />

@@ -2,14 +2,21 @@ import { NEXT_PUBLIC_API_URL, safeFetch } from "@/lib/fetch";
 import {
     AllTasks,
     CreateTask,
-    ReqCountTaskKind,
     ResponseCreateTask,
     ResponseDeleteTask,
-    ResponseTaskCount,
+    TaskCount,
+    TaskCountExecuted,
+    TaskCountInProgress,
+    TaskCountWithoutStart,
+    TasksDataDashboard,
     allTasksSchema,
     responseCreateTaskSchema,
     responseDeleteTask,
-    responseTaskCountSchema,
+    taskCountExecutedSchema,
+    taskCountInProgressSchema,
+    taskCountSchema,
+    taskCountWithoutStartSchema,
+    tasksDataDashboardSchema,
 } from "@/lib/schemas/task";
 
 export async function apiCreateTask(task: CreateTask, token?: string): Promise<ResponseCreateTask> {
@@ -33,8 +40,64 @@ export async function apiCreateTask(task: CreateTask, token?: string): Promise<R
     return taskCreated;
 }
 
-export async function apiGetCountTask(kind: ReqCountTaskKind, token?: string): Promise<ResponseTaskCount> {
-    const response = await safeFetch(responseTaskCountSchema, `${NEXT_PUBLIC_API_URL}/api/tareas/count/${kind}`, {
+export async function apiGetCountTasks(token?: string): Promise<TaskCount> {
+    const response = await safeFetch(taskCountSchema, `${NEXT_PUBLIC_API_URL}/api/tareas/count/all`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiGetCountWithoutStartTasks(token?: string): Promise<TaskCountWithoutStart> {
+    const response = await safeFetch(
+        taskCountWithoutStartSchema,
+        `${NEXT_PUBLIC_API_URL}/api/tareas/count/estado/sin_iniciar`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    return response;
+}
+
+export async function apiGetCountInProgressTasks(token?: string): Promise<TaskCountInProgress> {
+    const response = await safeFetch(
+        taskCountInProgressSchema,
+        `${NEXT_PUBLIC_API_URL}/api/tareas/count/estado/en_proceso`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    return response;
+}
+
+export async function apiGetCountExecutedTasks(token?: string): Promise<TaskCountExecuted> {
+    const response = await safeFetch(
+        taskCountExecutedSchema,
+        `${NEXT_PUBLIC_API_URL}/api/tareas/count/estado/ejecutadas`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    return response;
+}
+
+export async function apiGetTasksDataDashboard(token?: string): Promise<TasksDataDashboard> {
+    const response = await safeFetch(tasksDataDashboardSchema, `${NEXT_PUBLIC_API_URL}/api/tareas/data/dashboard`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
