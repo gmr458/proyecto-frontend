@@ -1,17 +1,13 @@
 "use client";
 
-import React from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
-// import colors from "tailwindcss/colors";
+import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts";
 
-// const barColors = [colors.yellow[600], colors.blue[600], colors.sky[400], colors.green[600]];
-
-interface QuantitiesPerType {
+interface BarChartWrapperProps {
     data: { name: string; value: number }[];
     colors: string[];
 }
 
-export function QuantitiesPerType({ data, colors }: QuantitiesPerType) {
+export function BarChartWrapper({ data, colors }: BarChartWrapperProps) {
     const biggerValue = data.reduce((maxData, currentData) =>
         currentData.value > maxData.value ? currentData : maxData,
     );

@@ -1,18 +1,9 @@
 "use client";
 
 import { Table } from "@tanstack/react-table";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { FilterIcon } from "lucide-react";
-
-// type KeyColumnTask =
-//     | "titulo"
-//     | "prioridad"
-//     | "tipo_tarea"
-//     | "empleado_email"
-//     | "creador_email"
-//     | "fecha_limite"
-//     | "estado";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 export type Column = {
     key: string;
@@ -62,22 +53,3 @@ export function DataTableToolbar<TData>({ table, columnsToFilter }: DataTableToo
         </div>
     );
 }
-
-// <Input
-//     placeholder="Filtrar titulos..."
-//     value={(table?.getColumn("titulo")?.getFilterValue() as string) ?? ""}
-//     onChange={(event) => table?.getColumn("titulo")?.setFilterValue(event.target.value)}
-//     className="h-8 w-[120px] lg:w-[220px]"
-// />
-// <Input
-//     placeholder="Filtrar emails empleados..."
-//     value={(table?.getColumn("empleado_email")?.getFilterValue() as string) ?? ""}
-//     onChange={(event) => table?.getColumn("empleado_email")?.setFilterValue(event.target.value)}
-//     className="h-8 w-[120px] lg:w-[220px]"
-// />
-// <Input
-//     placeholder="Filtrar email creadores..."
-//     value={(table?.getColumn("creador_email")?.getFilterValue() as string) ?? ""}
-//     onChange={(event) => table?.getColumn("creador_email")?.setFilterValue(event.target.value)}
-//     className="h-8 w-[120px] lg:w-[220px]"
-// />

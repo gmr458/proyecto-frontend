@@ -1,18 +1,18 @@
 "use client";
 
-import { useToast } from "./ui/use-toast";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { HttpError, apiCreateUser } from "@/lib/fetch";
 import { CreateUser, createUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { HttpError, apiCreateUser } from "@/lib/fetch";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { useEffect } from "react";
-import { Loader2Icon } from "lucide-react";
+import { useToast } from "./ui/use-toast";
 
 export default function CreateUserForm() {
     const { toast } = useToast();

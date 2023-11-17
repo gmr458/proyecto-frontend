@@ -1,11 +1,11 @@
 "use client";
 
+import { priorities, statuses, types } from "@/app/tasks/data";
+import { Button } from "@/components/ui/button";
 import { Task } from "@/lib/schemas/task";
 import { ColumnDef } from "@tanstack/react-table";
-import { priorities, statuses, types } from "@/app/tasks/data";
-import colors from "tailwindcss/colors";
 import { ArrowUpDownIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import colors from "tailwindcss/colors";
 
 export const columns: ColumnDef<Task>[] = [
     {

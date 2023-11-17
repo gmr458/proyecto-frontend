@@ -1,5 +1,6 @@
 "use client";
 
+import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
 import { Button } from "@/components/ui/button";
@@ -9,13 +10,12 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
 import { apiGetMyAssignedTasks } from "@/lib/fetch/tasks";
 import { Task } from "@/lib/schemas/task";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
-import { columns } from "@/app/tasks/columns";
-import { useToast } from "@/components/ui/use-toast";
 
 export default function AssignedTasksPage() {
     const { data: session } = useSession();

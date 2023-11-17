@@ -2,13 +2,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "./ui/label";
+import { apiGetProfile } from "@/lib/fetch";
 import { User } from "@/lib/schemas/user";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { apiGetProfile } from "@/lib/fetch";
-import { useToast } from "./ui/use-toast";
 import ProfileSkeleton from "./profile-skeleton";
+import { Label } from "./ui/label";
+import { useToast } from "./ui/use-toast";
 
 export default function Profile() {
     const { data: session, status } = useSession();

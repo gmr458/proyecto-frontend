@@ -1,14 +1,8 @@
 "use client";
 
-import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { HttpError, apiDeleteUserById, apiGetAllUsers } from "@/lib/fetch";
-import { User } from "@/lib/schemas/user";
-import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { columns } from "@/app/users/columns";
-import { CopyIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
+import { DataTable } from "@/components/data-table";
+import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,13 +13,19 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
+import { useToast } from "@/components/ui/use-toast";
+import { HttpError, apiDeleteUserById, apiGetAllUsers } from "@/lib/fetch";
+import { User } from "@/lib/schemas/user";
+import { CopyIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function AllUsersPage() {
     const { data: session } = useSession();

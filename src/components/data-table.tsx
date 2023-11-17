@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -14,16 +13,9 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-    DropdownMenuItem,
-    DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
-import { Loader2Icon, MoreHorizontalIcon } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import * as React from "react";
 import { Button } from "./ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 interface DataTableProps<TData, TValue> {
     children: React.JSX.Element;

@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { Skeleton } from "./ui/skeleton";
 import { usePathname } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
     const { data: session, status } = useSession();

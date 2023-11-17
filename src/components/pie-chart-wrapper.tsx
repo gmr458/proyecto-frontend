@@ -1,13 +1,9 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, TooltipProps } from "recharts";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
 import { Payload } from "recharts/types/component/DefaultLegendContent";
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-// import colors from "tailwindcss/colors";
-
-// const COLORS = [colors.green[600], colors.yellow[600], colors.red[600]];
 
 const RADIAN = Math.PI / 180;
 
@@ -33,13 +29,12 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 
-interface CustomLegentProps {
+interface CustomLegendProps {
     payload?: Payload[];
     colors: string[];
 }
 
-// const CustomLegend = (props: LegendProps) => {
-const CustomLegend = (props: CustomLegentProps) => {
+const CustomLegend = (props: CustomLegendProps) => {
     const { payload, colors } = props;
 
     return (
@@ -73,25 +68,12 @@ const CustomTooltip = (props: TooltipProps<ValueType, NameType>) => {
     return null;
 };
 
-// type OverviewProps = {
-//     sinIniciar?: number;
-//     enProceso?: number;
-//     ejecutadas?: number;
-// };
-
-interface OverviewProps {
+interface PieChartWrapperProps {
     data: { name: string; value: number }[];
     colors: string[];
 }
 
-export function PercentagesByStatus({ data, colors }: OverviewProps) {
-    // export function PercentagesByStatus({ sinIniciar, enProceso, ejecutadas }: OverviewProps) {
-    // const data = [
-    //     { name: "Ejecutadas", value: ejecutadas },
-    //     { name: "En Proceso", value: enProceso },
-    //     { name: "Sin Iniciar", value: sinIniciar },
-    // ];
-
+export function PieChartWrapper({ data, colors }: PieChartWrapperProps) {
     return (
         <ResponsiveContainer width="100%" height={500}>
             <PieChart>

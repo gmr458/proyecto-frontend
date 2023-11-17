@@ -1,6 +1,6 @@
+import { BarChartWrapper } from "@/components/bar-chart-wrapper";
 import MetricIndicatorProgressBar from "@/components/metric-indicator-progress-bar";
-import { PercentagesByStatus } from "@/components/overview";
-import { QuantitiesPerType } from "@/components/quantities-per-type";
+import { PieChartWrapper } from "@/components/pie-chart-wrapper";
 import { TopEmployees } from "@/components/top-employees";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
                     <Card>
                         <CardTitle className="text-center p-4">Porcentajes segun estado</CardTitle>
                         <CardContent>
-                            <PercentagesByStatus
+                            <PieChartWrapper
                                 colors={trafficLightColors}
                                 data={[
                                     {
@@ -133,7 +133,7 @@ export default async function DashboardPage() {
                     <Card>
                         <CardTitle className="text-center p-4">Cantidades segun tipo</CardTitle>
                         <CardContent>
-                            <QuantitiesPerType
+                            <BarChartWrapper
                                 colors={typeTasksColors}
                                 data={[
                                     { name: "Quimico", value: count_tareas_tipo_quimico },
@@ -147,7 +147,7 @@ export default async function DashboardPage() {
                     <Card>
                         <CardTitle className="text-center p-4">Porcentajes segun tipo</CardTitle>
                         <CardContent>
-                            <PercentagesByStatus
+                            <PieChartWrapper
                                 colors={typeTasksColors}
                                 data={[
                                     {
@@ -204,7 +204,7 @@ export default async function DashboardPage() {
                     <Card>
                         <CardTitle className="text-center p-4">Porcentajes segun prioridad</CardTitle>
                         <CardContent>
-                            <PercentagesByStatus
+                            <PieChartWrapper
                                 colors={trafficLightColors}
                                 data={[
                                     {

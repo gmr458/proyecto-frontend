@@ -1,5 +1,6 @@
 "use client";
 
+import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
 import {
@@ -25,7 +26,6 @@ import { Task } from "@/lib/schemas/task";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { columns } from "@/app/tasks/columns";
 
 export default function AllTasksPage() {
     const { data: session } = useSession();
