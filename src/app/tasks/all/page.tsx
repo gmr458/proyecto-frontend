@@ -1,6 +1,7 @@
 "use client";
 
 import { columns } from "@/app/tasks/columns";
+import CreateTaskForm from "@/components/create-task-form";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
 import {
@@ -14,6 +15,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -50,6 +52,14 @@ export default function AllTasksPage() {
         [tasks, toast, session?.user.token],
     );
 
+    const updateTasksState = useCallback(
+        (updatedTask: Task) => {
+            const updatedTasks = tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task));
+            setTasks(updatedTasks);
+        },
+        [tasks],
+    );
+
     useEffect(() => {
         async function fetchData() {
             if (session?.user.token) {
@@ -84,54 +94,67 @@ export default function AllTasksPage() {
                     const task = row.original;
 
                     return (
-                        <AlertDialog>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="h-8 w-8 p-0">
-                                        <span className="sr-only">Abrir menú</span>
-                                        <MoreHorizontalIcon className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem
-                                        onClick={() => navigator.clipboard.writeText(task.titulo.toString())}
-                                    >
-                                        Copiar titulo
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem
-                                        onClick={() => navigator.clipboard.writeText(task.empleado_email.toString())}
-                                    >
-                                        Copiar empleado email
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem
-                                        onClick={() => navigator.clipboard.writeText(task.creador_email.toString())}
-                                    >
-                                        Copiar creador email
-                                    </DropdownMenuItem>
-                                    <AlertDialogTrigger asChild>
-                                        <DropdownMenuItem>Eliminar</DropdownMenuItem>
-                                    </AlertDialogTrigger>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                    <Button asChild variant="destructive">
-                                        <AlertDialogAction onClick={() => deleteRow(task.id)}>
-                                            Eliminar
-                                        </AlertDialogAction>
-                                    </Button>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                        <Dialog>
+                            <AlertDialog>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" className="h-8 w-8 p-0">
+                                            <span className="sr-only">Abrir menú</span>
+                                            <MoreHorizontalIcon className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem
+                                            onClick={() => navigator.clipboard.writeText(task.titulo.toString())}
+                                        >
+                                            Copiar titulo
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onClick={() =>
+                                                navigator.clipboard.writeText(task.empleado_email.toString())
+                                            }
+                                        >
+                                            Copiar empleado email
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onClick={() => navigator.clipboard.writeText(task.creador_email.toString())}
+                                        >
+                                            Copiar creador email
+                                        </DropdownMenuItem>
+                                        <AlertDialogTrigger asChild>
+                                            <DropdownMenuItem>Eliminar</DropdownMenuItem>
+                                        </AlertDialogTrigger>
+                                        <DialogTrigger asChild>
+                                            <DropdownMenuItem>Editar</DropdownMenuItem>
+                                        </DialogTrigger>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                        <Button asChild variant="destructive">
+                                            <AlertDialogAction onClick={() => deleteRow(task.id)}>
+                                                Eliminar
+                                            </AlertDialogAction>
+                                        </Button>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Editar</DialogTitle>
+                                </DialogHeader>
+                                <CreateTaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
+                            </DialogContent>
+                        </Dialog>
                     );
                 },
             },
         ];
-    }, [deleteRow]);
+    }, [deleteRow, updateTasksState]);
 
     const columnsToFilter: Column[] = [
         { key: "titulo", placeholder: "Filtrar titulos..." },

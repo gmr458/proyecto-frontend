@@ -28,19 +28,19 @@ export const taskSchema = z.object({
     creador_nombre: z.string(),
     creador_apellido: z.string(),
     fecha_creacion: z.string(),
-    fecha_limite: z.string(),
+    fecha_limite: z.date().or(z.string()),
     evidencia: z.string().optional(),
     estado: z.enum(["sin_iniciar", "en_proceso", "ejecutada"]),
 });
 
 export type Task = z.infer<typeof taskSchema>;
 
-export const responseCreateTaskSchema = z.object({
+export const responseTaskSchema = z.object({
     msg: z.string(),
     tarea: taskSchema,
 });
 
-export type ResponseCreateTask = z.infer<typeof responseCreateTaskSchema>;
+export type ResponseTask = z.infer<typeof responseTaskSchema>;
 
 export const taskCountSchema = z.object({
     msg: z.string(),

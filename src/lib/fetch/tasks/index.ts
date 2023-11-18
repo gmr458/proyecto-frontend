@@ -2,7 +2,7 @@ import { NEXT_PUBLIC_API_URL, safeFetch } from "@/lib/fetch";
 import {
     AllTasks,
     CreateTask,
-    ResponseCreateTask,
+    ResponseTask,
     ResponseDeleteTask,
     TaskCount,
     TaskCountExecuted,
@@ -10,7 +10,7 @@ import {
     TaskCountWithoutStart,
     TasksDataDashboard,
     allTasksSchema,
-    responseCreateTaskSchema,
+    responseTaskSchema,
     responseDeleteTask,
     taskCountExecutedSchema,
     taskCountInProgressSchema,
@@ -19,9 +19,30 @@ import {
     tasksDataDashboardSchema,
 } from "@/lib/schemas/task";
 
-export async function apiCreateTask(task: CreateTask, token?: string): Promise<ResponseCreateTask> {
-    const taskCreated = await safeFetch(responseCreateTaskSchema, `${NEXT_PUBLIC_API_URL}/api/tareas`, {
+export async function apiCreateTask(task: CreateTask, token?: string): Promise<ResponseTask> {
+    const taskCreated = await safeFetch(responseTaskSchema, `${NEXT_PUBLIC_API_URL}/api/tareas`, {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            titulo: task.titulo,
+            prioridad: task.prioridad,
+            tipo_id: parseInt(task.tipo_id),
+            empleado_id: task.empleado_id,
+            creador_id: null,
+            fecha_limite: task.fecha_limite,
+            evidencia: "",
+        }),
+    });
+
+    return taskCreated;
+}
+
+export async function apiUpdateTaskById(task: CreateTask, id?: number, token?: string): Promise<ResponseTask> {
+    const taskCreated = await safeFetch(responseTaskSchema, `${NEXT_PUBLIC_API_URL}/api/tareas/${id}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
