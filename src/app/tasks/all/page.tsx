@@ -1,7 +1,7 @@
 "use client";
 
 import { columns } from "@/app/tasks/columns";
-import CreateTaskForm from "@/components/create-task-form";
+import TaskForm from "@/components/task-form";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
 import {
@@ -147,7 +147,7 @@ export default function AllTasksPage() {
                                 <DialogHeader>
                                     <DialogTitle>Editar</DialogTitle>
                                 </DialogHeader>
-                                <CreateTaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
+                                <TaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
                             </DialogContent>
                         </Dialog>
                     );

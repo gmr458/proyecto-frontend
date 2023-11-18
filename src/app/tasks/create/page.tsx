@@ -1,6 +1,6 @@
 "use client";
 
-import CreateTaskForm from "@/components/create-task-form";
+import TaskForm from "@/components/task-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function CreateTaskPage() {
@@ -11,7 +11,7 @@ export default function CreateTaskPage() {
                     <CardTitle className="text-2xl text-center">Crear tarea</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CreateTaskForm action="create" />
+                    <TaskForm action="create" />
                 </CardContent>
             </Card>
         </div>

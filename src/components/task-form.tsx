@@ -39,7 +39,7 @@ interface TaskFormProps {
     updateTasksState?: (updatedTask: Task) => void;
 }
 
-export default function CreateTaskForm({ action, taskValues, updateTasksState }: TaskFormProps) {
+export default function TaskForm({ action, taskValues, updateTasksState }: TaskFormProps) {
     const { toast } = useToast();
     const { data: session } = useSession();
     const [empleados, setEmpleados] = useState<User[]>([]);
