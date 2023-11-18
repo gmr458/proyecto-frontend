@@ -25,7 +25,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { apiDeleteTaskById, apiGetAllTasks } from "@/lib/fetch/tasks";
 import { Task } from "@/lib/schemas/task";
-import { MoreHorizontalIcon } from "lucide-react";
+import { CheckCircle, CopyIcon, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -105,27 +105,64 @@ export default function AllTasksPage() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem
-                                            onClick={() => navigator.clipboard.writeText(task.titulo.toString())}
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(task.titulo.toString());
+                                                toast({
+                                                    description: (
+                                                        <div className="flex flex-row items-center">
+                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                                            <span>Titulo copiado</span>
+                                                        </div>
+                                                    ),
+                                                });
+                                            }}
                                         >
-                                            Copiar titulo
+                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <span>Copiar titulo</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
-                                            onClick={() =>
-                                                navigator.clipboard.writeText(task.empleado_email.toString())
-                                            }
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(task.empleado_email.toString());
+                                                toast({
+                                                    description: (
+                                                        <div className="flex flex-row items-center">
+                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                                            <span>Email del empleado copiado</span>
+                                                        </div>
+                                                    ),
+                                                });
+                                            }}
                                         >
-                                            Copiar empleado email
+                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <span>Copiar empleado email</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
-                                            onClick={() => navigator.clipboard.writeText(task.creador_email.toString())}
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(task.creador_email.toString());
+                                                toast({
+                                                    description: (
+                                                        <div className="flex flex-row items-center">
+                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                                            <span>Email del creador copiado</span>
+                                                        </div>
+                                                    ),
+                                                });
+                                            }}
                                         >
-                                            Copiar creador email
+                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <span>Copiar creador email</span>
                                         </DropdownMenuItem>
                                         <AlertDialogTrigger asChild>
-                                            <DropdownMenuItem>Eliminar</DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <TrashIcon className="h-4 w-4 mr-2" />
+                                                <span>Eliminar</span>
+                                            </DropdownMenuItem>
                                         </AlertDialogTrigger>
                                         <DialogTrigger asChild>
-                                            <DropdownMenuItem>Editar</DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <PencilIcon className="h-4 w-4 mr-2" />
+                                                <span>Editar</span>
+                                            </DropdownMenuItem>
                                         </DialogTrigger>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -145,7 +182,7 @@ export default function AllTasksPage() {
                             </AlertDialog>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle>Editar</DialogTitle>
+                                    <DialogTitle className="text2xl text-center">Editar tarea</DialogTitle>
                                 </DialogHeader>
                                 <TaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
                             </DialogContent>
@@ -154,7 +191,7 @@ export default function AllTasksPage() {
                 },
             },
         ];
-    }, [deleteRow, updateTasksState]);
+    }, [deleteRow, updateTasksState, toast]);
 
     const columnsToFilter: Column[] = [
         { key: "titulo", placeholder: "Filtrar titulos..." },

@@ -189,19 +189,19 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                             <SelectContent>
                                                 <SelectItem value="baja">
                                                     <div className="flex items-center">
-                                                        <ArrowDownIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <ArrowDownIcon className="mr-1 h-4 w-4 text-green-600" />
                                                         <span>Baja</span>
                                                     </div>
                                                 </SelectItem>
                                                 <SelectItem value="media">
                                                     <div className="flex items-center">
-                                                        <ArrowRightIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <ArrowRightIcon className="mr-1 h-4 w-4 text-yellow-600" />
                                                         <span>Media</span>
                                                     </div>
                                                 </SelectItem>
                                                 <SelectItem value="alta">
                                                     <div className="flex items-center">
-                                                        <ArrowUpIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <ArrowUpIcon className="mr-1 h-4 w-4 text-red-600" />
                                                         <span>Alta</span>
                                                     </div>
                                                 </SelectItem>
@@ -233,19 +233,19 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                                 </SelectItem>
                                                 <SelectItem value="2">
                                                     <div className="flex items-center">
-                                                        <DropletsIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <DropletsIcon className="mr-1 h-4 w-4 text-blue-500" />
                                                         <span>Agua</span>
                                                     </div>
                                                 </SelectItem>
                                                 <SelectItem value="3">
                                                     <div className="flex items-center">
-                                                        <WindIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <WindIcon className="mr-1 h-4 w-4 text-sky-400" />
                                                         <span>Aire</span>
                                                     </div>
                                                 </SelectItem>
                                                 <SelectItem value="4">
                                                     <div className="flex items-center">
-                                                        <RecycleIcon className="mr-1 h-4 w-4 text-muted-foreground" />
+                                                        <RecycleIcon className="mr-1 h-4 w-4 text-green-500" />
                                                         <span>Reciclaje</span>
                                                     </div>
                                                 </SelectItem>

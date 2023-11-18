@@ -3,6 +3,7 @@
 import { priorities, statuses, types } from "@/app/tasks/data";
 import { Button } from "@/components/ui/button";
 import { Task } from "@/lib/schemas/task";
+import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDownIcon } from "lucide-react";
 import colors from "tailwindcss/colors";
@@ -71,9 +72,26 @@ export const columns: ColumnDef<Task>[] = [
                 return null;
             }
 
+            let color = "";
+            if (typeTask.value === "agua") {
+                color = colors.blue[500];
+            } else if (typeTask.value === "aire") {
+                color = colors.sky[400];
+            } else if (typeTask.value === "reciclaje") {
+                color = colors.green[500];
+            }
+
             return (
                 <div className="flex items-center">
-                    {typeTask.icon && <typeTask.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
+                    {typeTask.icon && (
+                        <typeTask.icon
+                            className={cn(
+                                "mr-2 h-4 w-4 text-muted-foreground",
+                                color === "" ? "text-muted-foreground" : "",
+                            )}
+                            color={color === "" ? undefined : color}
+                        />
+                    )}
                     <span>{typeTask.label}</span>
                 </div>
             );
