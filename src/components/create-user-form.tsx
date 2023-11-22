@@ -142,8 +142,8 @@ export default function CreateUserForm() {
         }
     }
 
-    const onSubmit: SubmitHandler<CreateUser> = (values) => {
-        createUser(values);
+    const onSubmit: SubmitHandler<CreateUser> = async (values) => {
+        await createUser(values);
     };
 
     return (

@@ -68,9 +68,9 @@ export default function CreateUserFromExcelForm() {
         }
     }
 
-    const onSubmit: SubmitHandler<CreateUsersExcel> = (values) => {
+    const onSubmit: SubmitHandler<CreateUsersExcel> = async (values) => {
         const file = Array.from(values.files)[0];
-        createUsers(file);
+        await createUsers(file);
     };
 
     return (

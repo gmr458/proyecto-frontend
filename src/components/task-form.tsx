@@ -148,8 +148,8 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
         }
     }
 
-    const onSubmit: SubmitHandler<CreateTask> = (values) => {
-        createTask(values);
+    const onSubmit: SubmitHandler<CreateTask> = async (values) => {
+        await createTask(values);
     };
 
     return (
