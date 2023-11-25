@@ -3,6 +3,7 @@
 import { columns } from "@/app/users/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
+import { ToastErrorMessage, ToastSuccessMessage } from "@/components/toast-message";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -40,7 +41,7 @@ export default function AllUsersPage() {
                 const response = await apiDeleteUserById(id, session?.user.token);
                 const updatedUsers = users.filter((row) => row.id !== id);
                 setUsers(updatedUsers);
-                toast({ description: response.msg });
+                toast({ description: <ToastSuccessMessage message={response.msg} /> });
             } catch (err: any) {
                 console.error(err);
                 let message = "Error al intentar eliminar la tarea, intenta más tarde.";
@@ -49,7 +50,7 @@ export default function AllUsersPage() {
                     message = err.body.detail.msg;
                 }
 
-                toast({ variant: "destructive", description: message });
+                toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
             }
         },
         [users, toast, session?.user.token],
@@ -70,7 +71,7 @@ export default function AllUsersPage() {
                     const message = "Error intentando obtener los usuarios, intenta más tarde.";
                     setLoadingDataTable(false);
                     setErrorDataTable(message);
-                    toast({ variant: "destructive", description: message });
+                    toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
                 }
             } else {
                 setLoadingDataTable(true);
@@ -101,7 +102,9 @@ export default function AllUsersPage() {
                                     <DropdownMenuItem
                                         onClick={() => {
                                             navigator.clipboard.writeText(task.email.toString());
-                                            toast({ description: "Email copiado" });
+                                            toast({
+                                                description: <ToastSuccessMessage message="Email copiado" />,
+                                            });
                                         }}
                                         className="flex flex-row items-center"
                                     >

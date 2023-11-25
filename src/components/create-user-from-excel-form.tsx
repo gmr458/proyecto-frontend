@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
+import { ToastErrorMessage, ToastSuccessMessage } from "./toast-message";
 
 export default function CreateUserFromExcelForm() {
     const { toast } = useToast();
@@ -37,7 +38,7 @@ export default function CreateUserFromExcelForm() {
             if (errors.files && errors.files.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.files.message,
+                    description: <ToastErrorMessage message={errors.files.message} />,
                 });
             }
         }
@@ -51,7 +52,7 @@ export default function CreateUserFromExcelForm() {
     async function createUsers(file: File) {
         try {
             const response = await apiCreateUserFromExcel(file, session?.user.token);
-            toast({ description: response.msg });
+            toast({ description: <ToastSuccessMessage message={response.msg} /> });
         } catch (err: any) {
             let toastMessage = "Error interno, intenta más tarde";
 
@@ -63,7 +64,7 @@ export default function CreateUserFromExcelForm() {
 
             toast({
                 variant: "destructive",
-                description: toastMessage,
+                description: <ToastErrorMessage message={toastMessage} />,
             });
         }
     }

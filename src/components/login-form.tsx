@@ -11,6 +11,7 @@ import { Loader2Icon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { ToastErrorMessage, ToastSuccessMessage } from "./toast-message";
 
 export default function LoginForm() {
     const router = useRouter();
@@ -49,14 +50,14 @@ export default function LoginForm() {
 
             toast({
                 variant: "destructive",
-                description: toastMessage,
+                description: <ToastErrorMessage message={toastMessage} />,
             });
             setFocus("email");
             resetField("password");
         }
 
         if (response?.ok) {
-            toast({ description: "Has iniciado sesión" });
+            toast({ description: <ToastSuccessMessage message="Has iniciado sesión" /> });
             return router.push("/profile");
         }
     };

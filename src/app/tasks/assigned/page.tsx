@@ -3,6 +3,7 @@
 import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
+import { ToastErrorMessage } from "@/components/toast-message";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -39,7 +40,7 @@ export default function AssignedTasksPage() {
                     const message = "Error intentando obtener las tareas, intenta más tarde.";
                     setLoadingDataTable(false);
                     setErrorDataTable(message);
-                    toast({ variant: "destructive", description: message });
+                    toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
                 }
             } else {
                 setLoadingDataTable(true);

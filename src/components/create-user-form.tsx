@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useToast } from "./ui/use-toast";
+import { ToastErrorMessage, ToastSuccessMessage } from "./toast-message";
 
 export default function CreateUserForm() {
     const { toast } = useToast();
@@ -45,7 +46,7 @@ export default function CreateUserForm() {
             if (errors.nombre && errors.nombre.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.nombre.message,
+                    description: <ToastErrorMessage message={errors.nombre.message} />,
                 });
                 return;
             }
@@ -53,7 +54,7 @@ export default function CreateUserForm() {
             if (errors.apellido && errors.apellido.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.apellido.message,
+                    description: <ToastErrorMessage message={errors.apellido.message} />,
                 });
                 return;
             }
@@ -61,7 +62,7 @@ export default function CreateUserForm() {
             if (errors.number && errors.number.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.number.message,
+                    description: <ToastErrorMessage message={errors.number.message} />,
                 });
                 return;
             }
@@ -69,7 +70,7 @@ export default function CreateUserForm() {
             if (errors.email && errors.email.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.email.message,
+                    description: <ToastErrorMessage message={errors.email.message} />,
                 });
                 return;
             }
@@ -77,7 +78,7 @@ export default function CreateUserForm() {
             if (errors.numero_documento && errors.numero_documento.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.numero_documento.message,
+                    description: <ToastErrorMessage message={errors.numero_documento.message} />,
                 });
                 return;
             }
@@ -85,7 +86,7 @@ export default function CreateUserForm() {
             if (errors.contrasena && errors.contrasena.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.contrasena.message,
+                    description: <ToastErrorMessage message={errors.contrasena.message} />,
                 });
                 return;
             }
@@ -93,7 +94,7 @@ export default function CreateUserForm() {
             if (errors.contrasenaConfirm && errors.contrasenaConfirm.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.contrasenaConfirm.message,
+                    description: <ToastErrorMessage message={errors.contrasenaConfirm.message} />,
                 });
                 return;
             }
@@ -101,7 +102,7 @@ export default function CreateUserForm() {
             if (errors.rol_id && errors.rol_id.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.rol_id.message,
+                    description: <ToastErrorMessage message={errors.rol_id.message} />,
                 });
                 return;
             }
@@ -111,7 +112,7 @@ export default function CreateUserForm() {
     async function createUser(user: CreateUser) {
         try {
             const response = await apiCreateUser(user, session?.user.token);
-            toast({ description: response.msg });
+            toast({ description: <ToastSuccessMessage message={response.msg} /> });
             reset();
         } catch (err: any) {
             let toastMessage = "Error interno, intenta más tarde";
@@ -138,7 +139,7 @@ export default function CreateUserForm() {
                 }
             }
 
-            toast({ variant: "destructive", description: toastMessage });
+            toast({ variant: "destructive", description: <ToastErrorMessage message={toastMessage} /> });
         }
     }
 

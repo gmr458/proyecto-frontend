@@ -25,9 +25,10 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { apiDeleteTaskById, apiGetAllTasks } from "@/lib/fetch/tasks";
 import { Task } from "@/lib/schemas/task";
-import { CheckCircle, CopyIcon, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { CopyIcon, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { ToastErrorMessage, ToastSuccessMessage } from "@/components/toast-message";
 
 export default function AllTasksPage() {
     const { data: session } = useSession();
@@ -42,11 +43,11 @@ export default function AllTasksPage() {
                 const response = await apiDeleteTaskById(id, session?.user.token);
                 const updatedTasks = tasks.filter((row) => row.id !== id);
                 setTasks(updatedTasks);
-                toast({ description: response.msg });
+                toast({ description: <ToastSuccessMessage message={response.msg} /> });
             } catch (err: any) {
                 console.error(err);
                 const message = "Error al intentar eliminar la tarea, intenta más tarde.";
-                toast({ variant: "destructive", description: message });
+                toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
             }
         },
         [tasks, toast, session?.user.token],
@@ -75,7 +76,7 @@ export default function AllTasksPage() {
                     const message = "Error intentando obtener las tareas, intenta más tarde.";
                     setLoadingDataTable(false);
                     setErrorDataTable(message);
-                    toast({ variant: "destructive", description: message });
+                    toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
                 }
             } else {
                 setLoadingDataTable(true);
@@ -108,12 +109,7 @@ export default function AllTasksPage() {
                                             onClick={() => {
                                                 navigator.clipboard.writeText(task.titulo.toString());
                                                 toast({
-                                                    description: (
-                                                        <div className="flex flex-row items-center">
-                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                                            <span>Titulo copiado</span>
-                                                        </div>
-                                                    ),
+                                                    description: <ToastSuccessMessage message="Titulo copiado" />,
                                                 });
                                             }}
                                         >
@@ -125,10 +121,7 @@ export default function AllTasksPage() {
                                                 navigator.clipboard.writeText(task.empleado_email.toString());
                                                 toast({
                                                     description: (
-                                                        <div className="flex flex-row items-center">
-                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                                            <span>Email del empleado copiado</span>
-                                                        </div>
+                                                        <ToastSuccessMessage message="Email del empleado copiado" />
                                                     ),
                                                 });
                                             }}
@@ -141,10 +134,7 @@ export default function AllTasksPage() {
                                                 navigator.clipboard.writeText(task.creador_email.toString());
                                                 toast({
                                                     description: (
-                                                        <div className="flex flex-row items-center">
-                                                            <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                                            <span>Email del creador copiado</span>
-                                                        </div>
+                                                        <ToastSuccessMessage message="Email del creador copiado" />
                                                     ),
                                                 });
                                             }}

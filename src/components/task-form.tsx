@@ -32,6 +32,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useToast } from "./ui/use-toast";
+import { ToastErrorMessage, ToastSuccessMessage } from "./toast-message";
 
 interface TaskFormProps {
     action: "create" | "edit";
@@ -84,7 +85,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
             if (errors.titulo && errors.titulo.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.titulo.message,
+                    description: <ToastErrorMessage message={errors.titulo.message} />,
                 });
                 return;
             }
@@ -92,7 +93,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
             if (errors.prioridad && errors.prioridad.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.prioridad.message,
+                    description: <ToastErrorMessage message={errors.prioridad.message} />,
                 });
                 return;
             }
@@ -100,7 +101,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
             if (errors.empleado_id && errors.empleado_id.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.empleado_id.message,
+                    description: <ToastErrorMessage message={errors.empleado_id.message} />,
                 });
                 return;
             }
@@ -108,7 +109,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
             if (errors.fecha_limite && errors.fecha_limite.message) {
                 toast({
                     variant: "destructive",
-                    description: errors.fecha_limite.message,
+                    description: <ToastErrorMessage message={errors.fecha_limite.message} />,
                 });
                 return;
             }
@@ -128,7 +129,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                 }
             }
 
-            toast({ description: response.msg });
+            toast({ description: <ToastSuccessMessage message={response.msg} /> });
             reset();
         } catch (err: any) {
             let toastMessage = "Error interno, intenta más tarde";
@@ -144,7 +145,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                 }
             }
 
-            toast({ variant: "destructive", description: toastMessage });
+            toast({ variant: "destructive", description: <ToastErrorMessage message={toastMessage} /> });
         }
     }
 
