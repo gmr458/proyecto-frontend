@@ -32,21 +32,19 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 interface CustomLegendProps {
     payload?: Payload[];
     colors: string[];
+    icons: React.JSX.Element[];
 }
 
 const CustomLegend = (props: CustomLegendProps) => {
-    const { payload, colors } = props;
+    const { payload, icons } = props;
 
     return (
-        <ul className="flex flex-row place-content-center gap-6">
+        <ul className="flex flex-row place-content-center gap-6 p-0">
             {payload?.map((entry, index) => {
                 return (
                     <li key={`item-${index}`} className="flex flex-row items-center">
-                        <div
-                            className="w-[18px] h-[18px] mr-1 rounded"
-                            style={{ backgroundColor: colors[index] }}
-                        ></div>
-                        <span>{entry.value}</span>
+                        {icons[index]}
+                        <span className="text-sm text-accent-foreground">{entry.value}</span>
                     </li>
                 );
             })}
@@ -71,26 +69,29 @@ const CustomTooltip = (props: TooltipProps<ValueType, NameType>) => {
 interface PieChartWrapperProps {
     data: { name: string; value: number }[];
     colors: string[];
+    icons: React.JSX.Element[];
+    height?: string | number;
+    outerRadius?: string | number;
 }
 
-export function PieChartWrapper({ data, colors }: PieChartWrapperProps) {
+export function PieChartWrapper({ data, colors, height, outerRadius, icons }: PieChartWrapperProps) {
     return (
-        <ResponsiveContainer width="100%" height={500}>
+        <ResponsiveContainer width="100%" height={height}>
             <PieChart>
                 <Tooltip content={<CustomTooltip />} />
-                <Legend content={<CustomLegend colors={colors} />} />
+                <Legend content={<CustomLegend colors={colors} icons={icons} />} />
                 <Pie
                     data={data}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    outerRadius={200}
+                    outerRadius={outerRadius}
                     fill="#8884d8"
                     dataKey="value"
                 >
                     {data.map((_entry, index) => (
-                        <Cell key={`cell-${index}`} style={{ outline: "none" }} fill={colors[index % colors.length]} />
+                        <Cell key={`cell-${index}`} style={{ outline: "none" }} fill={colors[index]} />
                     ))}
                 </Pie>
             </PieChart>

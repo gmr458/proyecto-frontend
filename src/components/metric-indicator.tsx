@@ -1,18 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 
 interface MetricIndicatorProps {
     title: string;
     data: number | string;
+    icon?: React.JSX.Element;
 }
 
-export default function MetricIndicator({ title, data }: MetricIndicatorProps) {
+export default function MetricIndicator({ title, data, icon }: MetricIndicatorProps) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="text-sm font-medium">{title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold">{data}</div>
+        <Card className="flex flex-col justify-between">
+            <CardContent className="flex flex-row justify-between gap-1 p-3 h-full">
+                <div className="flex flex-row items-start gap-2">
+                    {icon && icon}
+                    <h3 className="text-base font-medium">{title}</h3>
+                </div>
+                <div className="flex flex-row items-end gap-1">
+                    <div className="text-3xl font-bold">{data}</div>
+                </div>
             </CardContent>
         </Card>
     );

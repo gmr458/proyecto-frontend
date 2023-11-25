@@ -15,14 +15,18 @@ export default function MetricIndicatorProgressBar({ title, data, totalData, ico
 
     return (
         <Card className="flex flex-col justify-between">
-            <CardHeader className="flex flex-row items-center p-3">
-                {icon && icon}
-                <CardTitle className="text-lg font-medium ml-2">{title}</CardTitle>
-            </CardHeader>
             <CardContent className="flex flex-col gap-1 p-3">
-                <div className="text-2xl font-bold">{data}</div>
-                <Label className="text-muted-foreground">{progress.toFixed(0)}%</Label>
-                <Progress value={progress} />
+                <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row items-center gap-2">
+                        {icon && icon}
+                        <h3 className="text-sm font-medium">{title}</h3>
+                    </div>
+                    <div className="text-sm font-bold">{data}</div>
+                </div>
+                <div>
+                    <Label className="text-muted-foreground">{progress.toFixed(0)}%</Label>
+                    <Progress value={progress} />
+                </div>
             </CardContent>
         </Card>
     );
