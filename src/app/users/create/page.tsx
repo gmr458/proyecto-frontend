@@ -5,7 +5,7 @@ import CreateUserFromExcelForm from "@/components/create-user-from-excel-form";
 
 export default function CreateUserPage() {
     return (
-        <div className="min-h-min flex items-center justify-center gap-5">
+        <div className="flex min-h-min items-center justify-center gap-5">
             <CreateUserForm />
             <CreateUserFromExcelForm />
         </div>

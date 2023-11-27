@@ -6,7 +6,7 @@ export default function ProfileSkeleton() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl text-center">Perfil</CardTitle>
+                <CardTitle className="text-center text-2xl">Perfil</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-row gap-5">

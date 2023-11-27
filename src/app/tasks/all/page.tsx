@@ -113,7 +113,7 @@ export default function AllTasksPage() {
                                                 });
                                             }}
                                         >
-                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <CopyIcon className="mr-2 h-4 w-4" />
                                             <span>Copiar titulo</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
@@ -126,7 +126,7 @@ export default function AllTasksPage() {
                                                 });
                                             }}
                                         >
-                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <CopyIcon className="mr-2 h-4 w-4" />
                                             <span>Copiar empleado email</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
@@ -139,18 +139,18 @@ export default function AllTasksPage() {
                                                 });
                                             }}
                                         >
-                                            <CopyIcon className="h-4 w-4 mr-2" />
+                                            <CopyIcon className="mr-2 h-4 w-4" />
                                             <span>Copiar creador email</span>
                                         </DropdownMenuItem>
                                         <AlertDialogTrigger asChild>
                                             <DropdownMenuItem>
-                                                <TrashIcon className="h-4 w-4 mr-2" />
+                                                <TrashIcon className="mr-2 h-4 w-4" />
                                                 <span>Eliminar</span>
                                             </DropdownMenuItem>
                                         </AlertDialogTrigger>
                                         <DialogTrigger asChild>
                                             <DropdownMenuItem>
-                                                <PencilIcon className="h-4 w-4 mr-2" />
+                                                <PencilIcon className="mr-2 h-4 w-4" />
                                                 <span>Editar</span>
                                             </DropdownMenuItem>
                                         </DialogTrigger>

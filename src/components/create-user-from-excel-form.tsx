@@ -77,7 +77,7 @@ export default function CreateUserFromExcelForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-3">
-                <CardTitle className="text-2xl text-center">Desde un archivo Excel</CardTitle>
+                <CardTitle className="text-center text-2xl">Desde un archivo Excel</CardTitle>
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={handleSubmit(onSubmit)}>

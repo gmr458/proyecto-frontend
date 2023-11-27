@@ -9,7 +9,7 @@ interface MetricIndicatorProps {
 export default function MetricIndicator({ title, data, icon }: MetricIndicatorProps) {
     return (
         <Card className="flex flex-col justify-between">
-            <CardContent className="flex flex-row justify-between gap-1 p-3 h-full">
+            <CardContent className="flex h-full flex-row justify-between gap-1 p-3">
                 <div className="flex flex-row items-start gap-2">
                     {icon && icon}
                     <h3 className="text-base font-medium">{title}</h3>

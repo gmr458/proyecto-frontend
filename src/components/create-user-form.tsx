@@ -150,7 +150,7 @@ export default function CreateUserForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl text-center">Crear usuario</CardTitle>
+                <CardTitle className="text-center text-2xl">Crear usuario</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>

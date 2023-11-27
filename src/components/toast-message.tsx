@@ -7,7 +7,7 @@ interface ToastMessageProps {
 export function ToastSuccessMessage({ message }: ToastMessageProps) {
     return (
         <div className="flex flex-row items-center">
-            <CheckCircleIcon className="h-4 w-4 mr-2 text-green-600" />
+            <CheckCircleIcon className="mr-2 h-4 w-4 text-green-600" />
             <span>{message}</span>
         </div>
     );
@@ -16,7 +16,7 @@ export function ToastSuccessMessage({ message }: ToastMessageProps) {
 export function ToastErrorMessage({ message }: ToastMessageProps) {
     return (
         <div className="flex flex-row items-center">
-            <XCircleIcon className="h-4 w-4 mr-2" />
+            <XCircleIcon className="mr-2 h-4 w-4" />
             <span>{message}</span>
         </div>
     );

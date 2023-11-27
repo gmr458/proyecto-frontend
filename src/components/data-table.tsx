@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
         <div>
             {toolbar}
             <div className="rounded-md border">
-                <div className="h-[78vh] 2xl:h[85vh] relative overflow-auto">
+                <div className="2xl:h[85vh] relative h-[78vh] overflow-auto">
                     <Table>
                         <TableHeader className="sticky top-0 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                             {table.getHeaderGroups().map((headerGroup) => (

@@ -33,14 +33,14 @@ export default function Navbar() {
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <Container>
-                <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between w--full">
+                <div className="w--full relative flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center">
                         <Link href="/" className="ml-4 lg:ml-0">
                             <h1 className="text-xl font-bold">Aplicación Web</h1>
                         </Link>
                     </div>
                     <div className="flex justify-end">
-                        <nav className="flex flex-row gap-4 mx-5">
+                        <nav className="mx-5 flex flex-row gap-4">
                             {status === "loading" && unauthenticatedRoutes.includes(pathname) && (
                                 <>
                                     <Button asChild variant="ghost">
@@ -74,7 +74,7 @@ export default function Navbar() {
                                 </>
                             )}
                         </nav>
-                        <nav className="flex flex-row gap-4 mx-5">
+                        <nav className="mx-5 flex flex-row gap-4">
                             {status === "loading" && !unauthenticatedRoutes.includes(pathname) && (
                                 <>
                                     <Button asChild variant="ghost">

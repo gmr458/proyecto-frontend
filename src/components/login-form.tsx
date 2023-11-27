@@ -65,7 +65,7 @@ export default function LoginForm() {
     return (
         <Card className="my-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl text-center">Inicia sesión</CardTitle>
+                <CardTitle className="text-center text-2xl">Inicia sesión</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>

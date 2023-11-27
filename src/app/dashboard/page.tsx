@@ -107,13 +107,13 @@ export default async function DashboardPage() {
                                             <span>Estados</span>
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="h-[82%] w-[96%] mx-auto">
+                                    <CardContent className="mx-auto h-[82%] w-[96%]">
                                         <PieChartWrapper
                                             colors={[colors.green[600], colors.yellow[600], colors.red[600]]}
                                             icons={[
-                                                <CheckCircleIcon className="h-4 w-4 text-green-600 mr-1" key={0} />,
-                                                <RotateCwIcon className="h-4 w-4 text-yellow-600 mr-1" key={1} />,
-                                                <CircleIcon className="h-4 w-4 text-red-600 mr-1" key={2} />,
+                                                <CheckCircleIcon className="mr-1 h-4 w-4 text-green-600" key={0} />,
+                                                <RotateCwIcon className="mr-1 h-4 w-4 text-yellow-600" key={1} />,
+                                                <CircleIcon className="mr-1 h-4 w-4 text-red-600" key={2} />,
                                             ]}
                                             height="100%"
                                             outerRadius="80%"
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
                                             <span>Tipos</span>
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="pl-2 h-[82%] w-[95%] mx-auto">
+                                    <CardContent className="mx-auto h-[82%] w-[95%] pl-2">
                                         <BarChartWrapper
                                             colors={[
                                                 colors.yellow[600],
@@ -165,13 +165,13 @@ export default async function DashboardPage() {
                                             <span>Prioridad</span>
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="h-[82%] w-[95%] mx-auto">
+                                    <CardContent className="mx-auto h-[82%] w-[95%]">
                                         <PieChartWrapper
                                             colors={[colors.red[600], colors.yellow[600], colors.green[600]]}
                                             icons={[
-                                                <ArrowUpIcon className="h-4 w-4 text-red-600 mr-1" key={0} />,
-                                                <ArrowRightIcon className="h-4 w-4 text-yellow-600 mr-1" key={1} />,
-                                                <ArrowDownIcon className="h-4 w-4 text-green-600 mr-1" key={2} />,
+                                                <ArrowUpIcon className="mr-1 h-4 w-4 text-red-600" key={0} />,
+                                                <ArrowRightIcon className="mr-1 h-4 w-4 text-yellow-600" key={1} />,
+                                                <ArrowDownIcon className="mr-1 h-4 w-4 text-green-600" key={2} />,
                                             ]}
                                             height="100%"
                                             outerRadius="80%"

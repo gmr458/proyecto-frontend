@@ -9,7 +9,7 @@ type PropsTopEmployees = {
 export function TopEmployees({ users }: PropsTopEmployees) {
     return (
         <ScrollArea className="h-[560px]">
-            <div className="p-8 space-y-8">
+            <div className="space-y-8 p-8">
                 {users.map((user) => (
                     <div className="flex items-center" key={user.id}>
                         <Avatar className="h-9 w-9">

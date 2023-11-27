@@ -20,7 +20,7 @@ export function DataTableToolbar<TData>({ table, columnsToFilter }: DataTableToo
         <div className="flex items-center">
             <div className="flex flex-1 items-center justify-between gap-5">
                 <div className="flex flex-1 items-center space-x-2">
-                    <FilterIcon className="w-4 h-4 text-muted-foreground" />
+                    <FilterIcon className="h-4 w-4 text-muted-foreground" />
                     {columnsToFilter.map((column) => (
                         <Input
                             key={column.key}

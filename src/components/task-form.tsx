@@ -256,7 +256,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                 )}
                             />
                         </div>
-                        <div className="grid gap-1 mt-1">
+                        <div className="mt-1 grid gap-1">
                             <FormField
                                 control={control}
                                 name="empleado_id"
@@ -270,7 +270,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                                         variant="outline"
                                                         role="combobox"
                                                         className={cn(
-                                                            "flex justify-between w-[230px] px-3 py-2",
+                                                            "flex w-[230px] justify-between px-3 py-2",
                                                             !field.value && "text-muted-foreground",
                                                         )}
                                                     >
@@ -317,7 +317,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                 )}
                             />
                         </div>
-                        <div className="grid gap-1 mt-1">
+                        <div className="mt-1 grid gap-1">
                             <FormField
                                 control={form.control}
                                 name="fecha_limite"
@@ -330,7 +330,7 @@ export default function TaskForm({ action, taskValues, updateTasksState }: TaskF
                                                     <Button
                                                         variant={"outline"}
                                                         className={cn(
-                                                            "text-left font-normal px-3 py-2",
+                                                            "px-3 py-2 text-left font-normal",
                                                             !field.value && "text-muted-foreground",
                                                         )}
                                                     >
