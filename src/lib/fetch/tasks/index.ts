@@ -2,16 +2,16 @@ import { NEXT_PUBLIC_API_URL, safeFetch } from "@/lib/fetch";
 import {
     AllTasks,
     CreateTask,
-    ResponseTask,
     ResponseDeleteTask,
+    ResponseTask,
     TaskCount,
     TaskCountExecuted,
     TaskCountInProgress,
     TaskCountWithoutStart,
     TasksDataDashboard,
     allTasksSchema,
-    responseTaskSchema,
     responseDeleteTask,
+    responseTaskSchema,
     taskCountExecutedSchema,
     taskCountInProgressSchema,
     taskCountSchema,
@@ -153,6 +153,21 @@ export async function apiGetMyAssignedTasks(token?: string): Promise<AllTasks> {
 export async function apiDeleteTaskById(id: number, token?: string): Promise<ResponseDeleteTask> {
     const response = await safeFetch(responseDeleteTask, `${NEXT_PUBLIC_API_URL}/api/tareas/${id}`, {
         method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response;
+}
+
+export async function apiChangeTaskStatusById(
+    id: number,
+    status: "sin_iniciar" | "en_proceso" | "ejecutada",
+    token?: string,
+): Promise<ResponseTask> {
+    const response = await safeFetch(responseTaskSchema, `${NEXT_PUBLIC_API_URL}/api/tareas/${id}/estado/${status}`, {
+        method: "PATCH",
         headers: {
             Authorization: `Bearer ${token}`,
         },

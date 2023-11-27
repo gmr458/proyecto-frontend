@@ -3,7 +3,7 @@
 import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
-import { ToastErrorMessage } from "@/components/toast-message";
+import { ToastErrorMessage, ToastSuccessMessage } from "@/components/toast-message";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -12,11 +12,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { apiGetMyAssignedTasks } from "@/lib/fetch/tasks";
+import { apiChangeTaskStatusById, apiGetMyAssignedTasks } from "@/lib/fetch/tasks";
 import { Task } from "@/lib/schemas/task";
-import { MoreHorizontalIcon } from "lucide-react";
+import { CheckCircleIcon, CircleIcon, CopyIcon, MoreHorizontalIcon, RotateCwIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function AssignedTasksPage() {
     const { data: session } = useSession();
@@ -24,6 +24,22 @@ export default function AssignedTasksPage() {
     const [loadingDataTable, setLoadingDataTable] = useState<boolean>(true);
     const [errorDataTable, setErrorDataTable] = useState<string | null>(null);
     const { toast } = useToast();
+
+    const changeStatus = useCallback(
+        async (id: number, status: "sin_iniciar" | "en_proceso" | "ejecutada") => {
+            try {
+                const response = await apiChangeTaskStatusById(id, status, session?.user.token);
+                const updatedTasks = tasks.map((task) => (task.id === response.tarea.id ? response.tarea : task));
+                setTasks(updatedTasks);
+                toast({ description: <ToastSuccessMessage message={response.msg} /> });
+            } catch (err: any) {
+                console.error(err);
+                const message = "Error al intentar cambiar el estado de la tarea, intenta más tarde.";
+                toast({ variant: "destructive", description: <ToastErrorMessage message={message} /> });
+            }
+        },
+        [tasks, toast, session?.user.token],
+    );
 
     useEffect(() => {
         async function fetchData() {
@@ -67,26 +83,82 @@ export default function AssignedTasksPage() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => navigator.clipboard.writeText(task.titulo.toString())}>
-                                    Copiar titulo
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.titulo.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Titulo copiado" />,
+                                        });
+                                    }}
+                                >
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar titulo</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => navigator.clipboard.writeText(task.empleado_email.toString())}
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.empleado_email.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Email del empleado copiado" />,
+                                        });
+                                    }}
                                 >
-                                    Copiar empleado email
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar empleado email</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => navigator.clipboard.writeText(task.creador_email.toString())}
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.creador_email.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Email del creador copiado" />,
+                                        });
+                                    }}
                                 >
-                                    Copiar creador email
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar creador email</span>
                                 </DropdownMenuItem>
+                                {task.estado !== "sin_iniciar" && (
+                                    <>
+                                        <DropdownMenuItem
+                                            onClick={() => {
+                                                changeStatus(task.id, "sin_iniciar");
+                                            }}
+                                        >
+                                            <CircleIcon className="mr-2 h-4 w-4 text-red-600" />
+                                            <span>Establecer como sin iniciar</span>
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
+                                {task.estado !== "en_proceso" && (
+                                    <>
+                                        <DropdownMenuItem
+                                            onClick={() => {
+                                                changeStatus(task.id, "en_proceso");
+                                            }}
+                                        >
+                                            <RotateCwIcon className="mr-2 h-4 w-4 text-yellow-600" />
+                                            <span>Establecer como en proceso</span>
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
+                                {task.estado !== "ejecutada" && (
+                                    <>
+                                        <DropdownMenuItem
+                                            onClick={() => {
+                                                changeStatus(task.id, "ejecutada");
+                                            }}
+                                        >
+                                            <CheckCircleIcon className="mr-2 h-4 w-4 text-green-600" />
+                                            <span>Establecer como ejecutada</span>
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     );
                 },
             },
         ];
-    }, []);
+    }, [toast, changeStatus]);
 
     const columnsToFilter: Column[] = [
         { key: "titulo", placeholder: "Filtrar titulos..." },
