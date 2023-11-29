@@ -18,6 +18,7 @@ import {
     PlusCircleIcon,
     TablePropertiesIcon,
     UserIcon,
+    MessageCircle,
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -164,6 +165,10 @@ export default function Navbar() {
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                     <DropdownMenu>
+                                        <Link href="/chat" className={buttonVariants({ variant: "outline" })}>
+                                            <MessageCircle className="mr-2 h-4 w-4" />
+                                            <span>Chatbot</span>
+                                        </Link>
                                         <DropdownMenuTrigger>
                                             <Button variant="outline">
                                                 <UserIcon className="mr-2 h-4 w-4" />

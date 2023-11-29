@@ -7,14 +7,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { apiSendMessageChat } from "@/lib/fetch/chat";
 import { Message } from "@/lib/schemas/chat";
 import { cn } from "@/lib/utils";
-import { Send } from "lucide-react";
+import { Loader2Icon, MessageCircle, Send } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 
 export function CardChat() {
     const { data: session } = useSession();
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
+    const [loadingResponse, setLoadingResponse] = useState(false);
     const inputLength = input.trim().length;
 
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -23,34 +24,47 @@ export function CardChat() {
         if (scrollAreaRef.current) {
             scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
         }
-    }, [messages]);
 
-    async function handleSubmit(event: any) {
+        async function sendMessage(message: Message) {
+            try {
+                const response = await apiSendMessageChat(message, session?.user.token);
+                setMessages([...messages, response.data.message]);
+                setLoadingResponse(false);
+            } catch (err) {
+                const errMessage: Message = {
+                    role: "error",
+                    content: "Error, intenta mas tarde.",
+                };
+                setMessages([...messages, errMessage]);
+                setLoadingResponse(false);
+            }
+        }
+
+        const [message] = messages.slice(-1);
+        if (message && message.role === "user") {
+            sendMessage(message);
+        }
+    }, [messages, session?.user.token]);
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         if (inputLength === 0) return;
 
-        const message: Message = {
-            role: "user",
-            content: input,
-        };
+        setMessages([...messages, { role: "user", content: input }]);
 
-        try {
-            const response = await apiSendMessageChat(message, session?.user.token);
-            setMessages([...messages, message, response.data.message]);
-            setInput("");
-        } catch (err) {
-            const errMessage: Message = {
-                role: "error",
-                content: "Error, intenta mas tarde.",
-            };
-            setMessages([...messages, errMessage]);
-        }
-    }
+        setInput("");
+        setLoadingResponse(true);
+    };
 
     return (
         <Card className="my-10 flex h-[78vh] w-[90%] flex-col justify-between">
             <CardHeader>
-                <CardTitle className="text-center">Chatbot</CardTitle>
+                <CardTitle className="mx-auto text-2xl">
+                    <div className="flex flex-row items-center gap-2">
+                        <MessageCircle className="h-6 w-6" />
+                        <span className="tex">Chatbot</span>
+                    </div>
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <ScrollArea className="h-[52vh] px-3" ref={scrollAreaRef}>
@@ -89,8 +103,10 @@ export function CardChat() {
                         value={input}
                         onChange={(event) => setInput(event.target.value)}
                     />
-                    <Button type="submit" size="icon" disabled={inputLength === 0}>
-                        <Send className="h-4 w-4" />
+                    <Button type="submit" size="icon" disabled={inputLength === 0 || loadingResponse}>
+                        {(loadingResponse && <Loader2Icon className="h-4 w-4 animate-spin" />) || (
+                            <Send className="h-4 w-4" />
+                        )}
                         <span className="sr-only">Send</span>
                     </Button>
                 </form>
