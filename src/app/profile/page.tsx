@@ -1,6 +1,9 @@
-"use client";
-
 import Profile from "@/components/profile";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Perfil",
+};
 
 export default function ProfilePage() {
     return (
