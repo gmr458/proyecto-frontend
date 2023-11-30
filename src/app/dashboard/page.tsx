@@ -51,7 +51,6 @@ export default async function DashboardPage() {
                         <div className="flex flex-row justify-between">
                             <TabsList className="mb-1">
                                 <TabsTrigger value="tasks">Tareas</TabsTrigger>
-                                <TabsTrigger value="users">Usuarios</TabsTrigger>
                             </TabsList>
                         </div>
                         <TabsContent value="tasks" className="flex flex-col gap-3">
