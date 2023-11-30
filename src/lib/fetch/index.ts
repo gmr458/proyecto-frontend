@@ -51,6 +51,7 @@ export async function safeFetch<T>(schema: z.Schema<T>, input: RequestInfo, init
 
     const result = schema.safeParse(json);
     if (!result.success) {
+        console.log({ zodError: result.error });
         throw newHttpError("Unexpected response schema", response, init?.method);
     }
 

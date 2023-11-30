@@ -3,8 +3,10 @@
 import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
+import { Observations } from "@/components/observations";
 import { ToastErrorMessage, ToastSuccessMessage } from "@/components/toast-message";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,7 +16,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { apiChangeTaskStatusById, apiGetMyAssignedTasks } from "@/lib/fetch/tasks";
 import { Task } from "@/lib/schemas/task";
-import { CheckCircleIcon, CircleIcon, CopyIcon, MoreHorizontalIcon, RotateCwIcon } from "lucide-react";
+import { CheckCircleIcon, EyeIcon, CircleIcon, CopyIcon, MoreHorizontalIcon, RotateCwIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -116,6 +118,23 @@ export default function AssignedTasksPage() {
                                     <CopyIcon className="mr-2 h-4 w-4" />
                                     <span>Copiar creador email</span>
                                 </DropdownMenuItem>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                            <EyeIcon className="mr-2 h-4 w-4" />
+                                            <span>Observaciones</span>
+                                        </DropdownMenuItem>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle className="mx-auto flex flex-row items-center gap-2">
+                                                <EyeIcon className="h-6 w-6" />
+                                                <span className="text-2xl">Observaciones</span>
+                                            </DialogTitle>
+                                        </DialogHeader>
+                                        <Observations taskId={task.id} />
+                                    </DialogContent>
+                                </Dialog>
                                 {task.estado !== "sin_iniciar" && (
                                     <>
                                         <DropdownMenuItem

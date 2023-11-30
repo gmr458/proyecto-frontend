@@ -3,6 +3,7 @@
 import { columns } from "@/app/tasks/columns";
 import { DataTable } from "@/components/data-table";
 import { Column, DataTableToolbar } from "@/components/data-table-toolbar";
+import { Observations } from "@/components/observations";
 import TaskForm from "@/components/task-form";
 import { ToastErrorMessage, ToastSuccessMessage } from "@/components/toast-message";
 import {
@@ -34,6 +35,7 @@ import {
     PencilIcon,
     RotateCwIcon,
     TrashIcon,
+    EyeIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -208,6 +210,23 @@ export default function AllTasksPage() {
                                             <DialogTitle className="text2xl text-center">Editar tarea</DialogTitle>
                                         </DialogHeader>
                                         <TaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
+                                    </DialogContent>
+                                </Dialog>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                            <EyeIcon className="mr-2 h-4 w-4" />
+                                            <span>Observaciones</span>
+                                        </DropdownMenuItem>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle className="mx-auto flex flex-row items-center gap-2">
+                                                <EyeIcon className="h-6 w-6" />
+                                                <span className="text-2xl">Observaciones</span>
+                                            </DialogTitle>
+                                        </DialogHeader>
+                                        <Observations taskId={task.id} />
                                     </DialogContent>
                                 </Dialog>
                                 <AlertDialog>

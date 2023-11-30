@@ -112,7 +112,10 @@ export default function AllUsersPage() {
                                 </DropdownMenuItem>
                                 <AlertDialog>
                                     <AlertDialogTrigger asChild>
-                                        <DropdownMenuItem className="flex flex-row items-center" onSelect={(e) => e.preventDefault()}>
+                                        <DropdownMenuItem
+                                            className="flex flex-row items-center"
+                                            onSelect={(e) => e.preventDefault()}
+                                        >
                                             <TrashIcon className="mr-2 h-4 w-4" />
                                             <span>Eliminar</span>
                                         </DropdownMenuItem>
