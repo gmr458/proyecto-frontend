@@ -119,124 +119,120 @@ export default function AllTasksPage() {
                     const task = row.original;
 
                     return (
-                        <Dialog>
-                            <AlertDialog>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="h-8 w-8 p-0">
-                                            <span className="sr-only">Abrir menú</span>
-                                            <MoreHorizontalIcon className="h-4 w-4" />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">Abrir menú</span>
+                                    <MoreHorizontalIcon className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.titulo.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Titulo copiado" />,
+                                        });
+                                    }}
+                                >
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar titulo</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.empleado_email.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Email del empleado copiado" />,
+                                        });
+                                    }}
+                                >
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar empleado email</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.creador_email.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Email del creador copiado" />,
+                                        });
+                                    }}
+                                >
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar creador email</span>
+                                </DropdownMenuItem>
+                                {task.estado !== "sin_iniciar" && (
+                                    <>
                                         <DropdownMenuItem
                                             onClick={() => {
-                                                navigator.clipboard.writeText(task.titulo.toString());
-                                                toast({
-                                                    description: <ToastSuccessMessage message="Titulo copiado" />,
-                                                });
+                                                changeStatus(task.id, "sin_iniciar");
                                             }}
                                         >
-                                            <CopyIcon className="mr-2 h-4 w-4" />
-                                            <span>Copiar titulo</span>
+                                            <CircleIcon className="mr-2 h-4 w-4 text-red-600" />
+                                            <span>Establecer como sin iniciar</span>
                                         </DropdownMenuItem>
+                                    </>
+                                )}
+                                {task.estado !== "en_proceso" && (
+                                    <>
                                         <DropdownMenuItem
                                             onClick={() => {
-                                                navigator.clipboard.writeText(task.empleado_email.toString());
-                                                toast({
-                                                    description: (
-                                                        <ToastSuccessMessage message="Email del empleado copiado" />
-                                                    ),
-                                                });
+                                                changeStatus(task.id, "en_proceso");
                                             }}
                                         >
-                                            <CopyIcon className="mr-2 h-4 w-4" />
-                                            <span>Copiar empleado email</span>
+                                            <RotateCwIcon className="mr-2 h-4 w-4 text-yellow-600" />
+                                            <span>Establecer como en proceso</span>
                                         </DropdownMenuItem>
+                                    </>
+                                )}
+                                {task.estado !== "ejecutada" && (
+                                    <>
                                         <DropdownMenuItem
                                             onClick={() => {
-                                                navigator.clipboard.writeText(task.creador_email.toString());
-                                                toast({
-                                                    description: (
-                                                        <ToastSuccessMessage message="Email del creador copiado" />
-                                                    ),
-                                                });
+                                                changeStatus(task.id, "ejecutada");
                                             }}
                                         >
-                                            <CopyIcon className="mr-2 h-4 w-4" />
-                                            <span>Copiar creador email</span>
+                                            <CheckCircleIcon className="mr-2 h-4 w-4 text-green-600" />
+                                            <span>Establecer como ejecutada</span>
                                         </DropdownMenuItem>
-                                        {task.estado !== "sin_iniciar" && (
-                                            <>
-                                                <DropdownMenuItem
-                                                    onClick={() => {
-                                                        changeStatus(task.id, "sin_iniciar");
-                                                    }}
-                                                >
-                                                    <CircleIcon className="mr-2 h-4 w-4 text-red-600" />
-                                                    <span>Establecer como sin iniciar</span>
-                                                </DropdownMenuItem>
-                                            </>
-                                        )}
-                                        {task.estado !== "en_proceso" && (
-                                            <>
-                                                <DropdownMenuItem
-                                                    onClick={() => {
-                                                        changeStatus(task.id, "en_proceso");
-                                                    }}
-                                                >
-                                                    <RotateCwIcon className="mr-2 h-4 w-4 text-yellow-600" />
-                                                    <span>Establecer como en proceso</span>
-                                                </DropdownMenuItem>
-                                            </>
-                                        )}
-                                        {task.estado !== "ejecutada" && (
-                                            <>
-                                                <DropdownMenuItem
-                                                    onClick={() => {
-                                                        changeStatus(task.id, "ejecutada");
-                                                    }}
-                                                >
-                                                    <CheckCircleIcon className="mr-2 h-4 w-4 text-green-600" />
-                                                    <span>Establecer como ejecutada</span>
-                                                </DropdownMenuItem>
-                                            </>
-                                        )}
-                                        <DialogTrigger asChild>
-                                            <DropdownMenuItem>
-                                                <PencilIcon className="mr-2 h-4 w-4" />
-                                                <span>Editar</span>
-                                            </DropdownMenuItem>
-                                        </DialogTrigger>
-                                        <AlertDialogTrigger asChild>
-                                            <DropdownMenuItem>
-                                                <TrashIcon className="mr-2 h-4 w-4" />
-                                                <span>Eliminar</span>
-                                            </DropdownMenuItem>
-                                        </AlertDialogTrigger>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                        <Button asChild variant="destructive">
-                                            <AlertDialogAction onClick={() => deleteRow(task.id)}>
-                                                Eliminar
-                                            </AlertDialogAction>
-                                        </Button>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle className="text2xl text-center">Editar tarea</DialogTitle>
-                                </DialogHeader>
-                                <TaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
-                            </DialogContent>
-                        </Dialog>
+                                    </>
+                                )}
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                            <PencilIcon className="mr-2 h-4 w-4" />
+                                            <span>Editar</span>
+                                        </DropdownMenuItem>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle className="text2xl text-center">Editar tarea</DialogTitle>
+                                        </DialogHeader>
+                                        <TaskForm action="edit" taskValues={task} updateTasksState={updateTasksState} />
+                                    </DialogContent>
+                                </Dialog>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                            <TrashIcon className="mr-2 h-4 w-4" />
+                                            <span>Eliminar</span>
+                                        </DropdownMenuItem>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                            <Button asChild variant="destructive">
+                                                <AlertDialogAction onClick={() => deleteRow(task.id)}>
+                                                    Eliminar
+                                                </AlertDialogAction>
+                                            </Button>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     );
                 },
             },

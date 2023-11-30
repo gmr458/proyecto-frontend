@@ -90,49 +90,49 @@ export default function AllUsersPage() {
                     const task = row.original;
 
                     return (
-                        <AlertDialog>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="h-8 w-8 p-0">
-                                        <span className="sr-only">Abrir menú</span>
-                                        <MoreHorizontalIcon className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem
-                                        onClick={() => {
-                                            navigator.clipboard.writeText(task.email.toString());
-                                            toast({
-                                                description: <ToastSuccessMessage message="Email copiado" />,
-                                            });
-                                        }}
-                                        className="flex flex-row items-center"
-                                    >
-                                        <CopyIcon className="mr-2 h-4 w-4" />
-                                        <span>Copiar email</span>
-                                    </DropdownMenuItem>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">Abrir menú</span>
+                                    <MoreHorizontalIcon className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(task.email.toString());
+                                        toast({
+                                            description: <ToastSuccessMessage message="Email copiado" />,
+                                        });
+                                    }}
+                                    className="flex flex-row items-center"
+                                >
+                                    <CopyIcon className="mr-2 h-4 w-4" />
+                                    <span>Copiar email</span>
+                                </DropdownMenuItem>
+                                <AlertDialog>
                                     <AlertDialogTrigger asChild>
-                                        <DropdownMenuItem className="flex flex-row items-center">
+                                        <DropdownMenuItem className="flex flex-row items-center" onSelect={(e) => e.preventDefault()}>
                                             <TrashIcon className="mr-2 h-4 w-4" />
                                             <span>Eliminar</span>
                                         </DropdownMenuItem>
                                     </AlertDialogTrigger>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                    <Button asChild variant="destructive">
-                                        <AlertDialogAction onClick={() => deleteRow(task.id)}>
-                                            Eliminar
-                                        </AlertDialogAction>
-                                    </Button>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                            <Button asChild variant="destructive">
+                                                <AlertDialogAction onClick={() => deleteRow(task.id)}>
+                                                    Eliminar
+                                                </AlertDialogAction>
+                                            </Button>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     );
                 },
             },
