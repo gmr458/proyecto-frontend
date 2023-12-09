@@ -4,6 +4,8 @@ import { Table } from "@tanstack/react-table";
 import { FilterIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import jsPDF from "jspdf";
+import autoTable, { RowInput } from "jspdf-autotable";
 
 export type Column = {
     key: string;
@@ -13,9 +15,18 @@ export type Column = {
 interface DataTableToolbarProps<TData> {
     table?: Table<TData>;
     columnsToFilter: Column[];
+    columnLabels: string[];
+    data: any[];
+    fileNamePdf: string;
 }
 
-export function DataTableToolbar<TData>({ table, columnsToFilter }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({
+    table,
+    columnsToFilter,
+    columnLabels,
+    data,
+    fileNamePdf,
+}: DataTableToolbarProps<TData>) {
     return (
         <div className="flex items-center">
             <div className="flex flex-1 items-center justify-between gap-5">
@@ -32,6 +43,19 @@ export function DataTableToolbar<TData>({ table, columnsToFilter }: DataTableToo
                     ))}
                 </div>
                 <div className="flex items-center justify-end space-x-2 py-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                            const values = data.map((d) => Object.values(d));
+                            const pdf = new jsPDF({ orientation: "landscape" });
+                            autoTable(pdf, { head: [columnLabels], body: values as RowInput[] });
+                            pdf.setLineWidth;
+                            pdf.save(fileNamePdf);
+                        }}
+                    >
+                        Descargar
+                    </Button>
                     <Button
                         variant="outline"
                         size="sm"

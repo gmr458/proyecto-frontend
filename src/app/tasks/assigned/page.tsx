@@ -184,6 +184,8 @@ export default function AssignedTasksPage() {
         { key: "creador_email", placeholder: "Filtrar email creadores..." },
     ];
 
+    const columnLabels = ["Titulo", "Prioridad", "Tipo", "Creador", "Fecha de creación", "Fecha limite", "Estado"];
+
     return (
         <div className="hidden h-full flex-1 flex-col space-y-8 px-8 md:flex">
             <DataTable
@@ -193,7 +195,28 @@ export default function AssignedTasksPage() {
                 loadingData={loadingDataTable}
                 error={errorDataTable}
             >
-                <DataTableToolbar columnsToFilter={columnsToFilter} />
+                <DataTableToolbar
+                    columnsToFilter={columnsToFilter}
+                    columnLabels={columnLabels}
+                    data={tasks.map((task) => {
+                        const {
+                            id,
+                            tipo_tarea_id,
+                            tipo_tarea_descripcion,
+                            empleado_id,
+                            empleado_nombre,
+                            empleado_apellido,
+                            empleado_email,
+                            creador_id,
+                            creador_nombre,
+                            creador_apellido,
+                            evidencia,
+                            ...newTask
+                        } = task;
+                        return newTask;
+                    })}
+                    fileNamePdf="tareas.pdf"
+                />
             </DataTable>
         </div>
     );

@@ -14,9 +14,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import * as React from "react";
-import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import { ScrollArea } from "./ui/scroll-area";
 
 interface DataTableProps<TData, TValue> {
     children: React.JSX.Element;

@@ -149,10 +149,32 @@ export default function AllUsersPage() {
         { key: "phone_number", placeholder: "Filtrar teléfonos..." },
     ];
 
+    const columnLabels = [
+        "Nombre",
+        "Apellido",
+        "Email",
+        "Número de documento",
+        "Número de teléfono",
+        "Fecha de creación",
+        "Rol",
+        "Estado",
+    ];
+
     return (
         <div className="hidden h-full flex-1 flex-col space-y-8 px-8 md:flex">
             <DataTable columns={memoizedColumns} data={users} loadingData={loadingDataTable} error={errorDataTable}>
-                <DataTableToolbar columnsToFilter={columnsToFilter} />
+                <DataTableToolbar
+                    columnsToFilter={columnsToFilter}
+                    columnLabels={columnLabels}
+                    data={users.map((user) => {
+                        const status = user.activado ? "Activado" : "Desactivado";
+                        const { id, code_country, activado, ...newUser } = user;
+                        // @ts-ignore
+                        newUser.status = status;
+                        return newUser;
+                    })}
+                    fileNamePdf="usuarios.pdf"
+                />
             </DataTable>
         </div>
     );
