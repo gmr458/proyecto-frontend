@@ -100,11 +100,9 @@ export default function Navbar() {
                                                 <LayoutDashboardIcon className="mr-2 h-4 w-4" />
                                                 <span>Dashboard</span>
                                             </Link>
-                                            <DropdownMenuTrigger>
-                                                <Button variant="outline">
-                                                    <LayoutListIcon className="mr-2 h-4 w-4" />
-                                                    <span>Usuarios</span>
-                                                </Button>
+                                            <DropdownMenuTrigger className={buttonVariants({ variant: "outline" })}>
+                                                <LayoutListIcon className="mr-2 h-4 w-4" />
+                                                <span>Usuarios</span>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem asChild>
@@ -123,11 +121,9 @@ export default function Navbar() {
                                         </DropdownMenu>
                                     )}
                                     <DropdownMenu>
-                                        <DropdownMenuTrigger>
-                                            <Button variant="outline">
-                                                <LayoutListIcon className="mr-2 h-4 w-4" />
-                                                <span>Tareas</span>
-                                            </Button>
+                                        <DropdownMenuTrigger className={buttonVariants({ variant: "outline" })}>
+                                            <LayoutListIcon className="mr-2 h-4 w-4" />
+                                            <span>Tareas</span>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             {session.user.roles.includes("administrador") && (
@@ -169,11 +165,9 @@ export default function Navbar() {
                                             <MessageCircle className="mr-2 h-4 w-4" />
                                             <span>Chatbot</span>
                                         </Link>
-                                        <DropdownMenuTrigger>
-                                            <Button variant="outline">
-                                                <UserIcon className="mr-2 h-4 w-4" />
-                                                <span>Cuenta</span>
-                                            </Button>
+                                        <DropdownMenuTrigger className={buttonVariants({ variant: "outline" })}>
+                                            <UserIcon className="mr-2 h-4 w-4" />
+                                            <span>Cuenta</span>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuItem asChild>
